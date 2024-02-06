@@ -1,0 +1,29 @@
+.container{
+    text-align: center;
+    position:relative;  
+    margin: auto;
+
+}
+
+.container2{
+    display: flex;
+    flex-wrap: wrap; 
+    flex-direction: row; 
+    justify-content: space-around;
+    max-width: 1500px;
+    margin: 0 auto;
+    gap: 20px;
+
+}
+
+.container3{
+    text-align: center;
+    align-items: center;
+    position: relative;
+    margin: 0 auto;
+    padding: 1px;
+    background-color: rgb(233, 231, 231);
+    border-radius: 25px;
+    width: 500px;
+    height: 540px;
+}
