@@ -20,8 +20,8 @@ export default function Details() {
                 <div>
                     <h3>Seat Reserved</h3>
                 </div>
-                <div>
-                    <p><small>Total No. of Seats Reserved: 10</small></p>
+                <div className='smallText'>
+                    <p>Total No. of Seats Reserved: 10</p>
                 </div>               
                 <p>
                     
