@@ -1,16 +1,18 @@
 h3{
-    text-align: left;
     text-indent: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 h4{
-    text-align: left;
     text-indent: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 p{
-    display: inline;
-    text-indent: 40px;
+    text-indent: 10px;
+    margin: 0;
 }
 
 header{
@@ -20,11 +22,22 @@ header{
 
 .smallText{
     text-align: right;
+    padding-right: 20px;
+}
+
+.secondColumn{
+    text-align: right;
+    padding-right: 4em;
+}
+
+.total{
+    text-align: right;
+    padding-right: 3em;
 }
 
 .container{
     text-align: center;
-    position:relative;  
+    position: relative;  
     margin: auto;
     max-width: 100%;
     max-height: 100%;
@@ -37,9 +50,11 @@ header{
 }
 
 .reservation{
-    text-align: center;
     align-items: center;
     position: relative;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 2em;
     margin: 0 auto;
     padding: 1px;
     background-color: rgb(233, 231, 231);
@@ -52,7 +67,7 @@ header{
     position: relative;
     display: grid;
     grid-template-columns: auto auto;
-    gap: 2em;
+    column-gap: 2em;
     margin: 0 auto;
     padding: 1px;
     background-color: rgb(233, 231, 231);
@@ -60,13 +75,10 @@ header{
     height: fit-content;
 }
 
-
-
 .payment{
     text-align: center;
     align-items: center;
     position: relative;
-
     margin: 0 auto;
     padding: 1px;
     background-color: rgb(233, 231, 231);
