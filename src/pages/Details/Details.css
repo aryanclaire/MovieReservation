@@ -1,16 +1,19 @@
 h3{
+    text-align: left;
     text-indent: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 h4{
+    text-align: left;
     text-indent: 10px;
     margin-top: 2px;
     margin-bottom: 2px;
 }
 
 p{
+    text-align: left;
     text-indent: 10px;
     margin: 0;
 }
@@ -26,6 +29,7 @@ header{
 }
 
 .secondColumn{
+    font-weight: bold;
     text-align: right;
     padding-right: 4em;
 }
@@ -59,7 +63,7 @@ header{
     padding: 1px;
     background-color: rgb(233, 231, 231);
     width: 36em;
-    height: 20em;
+    height: fit-content;
 }
 
 .seat{
@@ -83,7 +87,16 @@ header{
     padding: 1px;
     background-color: rgb(233, 231, 231);
     width: 36em;
-    height: 15em;
+    height: fit-content;
+}
+
+.payment2{
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 2em;
+    margin: 0 auto;
+    height: fit-content;
 }
 
 @media screen and (min-width: 1440px){

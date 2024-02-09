@@ -10,7 +10,7 @@ export default function Details() {
                 <h3>Reservation Description</h3>
                 </div>
                 <div className='smallText'>
-                    <p>Total No. of Seats Reserved: 10</p>
+                    <p>ID: asdifhoainjh</p>
                 </div>                
                 <p>
                     
@@ -53,10 +53,33 @@ export default function Details() {
             <div className='payment'>
                 <header>
                     <h3>Payment Breakdown</h3>
-                </header>                
-                <p>
-                    
-                </p>
+                </header>
+                <div className='payment2'>
+                    <p><b>
+                        Type:
+                    </b></p>
+                    <p className='secondColumn'>
+                        350(REGULAR)
+                    </p>
+                    <p><b>
+                        Number of Seats:
+                    </b></p>
+                    <p className='secondColumn'>
+                        4
+                    </p>
+                    <p><b>
+                        Discount:
+                    </b></p>
+                    <p className='secondColumn'>
+                        20%
+                    </p>
+                    <p>
+                        
+                    </p>
+                    <h4 className='total'>
+                        AMOUNT OF PAY: 1,120
+                    </h4>
+                </div>             
             </div>
         </div>
     </div>
