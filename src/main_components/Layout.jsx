@@ -20,6 +20,7 @@ import { Link, Outlet } from 'react-router-dom';
 
 import HomeIcon from '@mui/icons-material/Home';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
+import 'D:/MovieReservation/MovieReservation/src/styles/Home.css';
 
 const drawerWidth = 240;
 
@@ -103,7 +104,7 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{ backgroundColor: '#678983', color: 'white' }}>
+      <AppBar position="fixed" open={open} sx={{ backgroundColor: '#fff', color: '#000' }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -122,9 +123,11 @@ export default function MiniDrawer() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} 
+        style={{ background: '#000'}}
+      >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} >
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>

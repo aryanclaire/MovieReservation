@@ -1,0 +1,23 @@
+
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    gap: 1%;
+}
+.l-cont {
+    width: 25%;
+}
+
+.r-cont {
+    width: 75%;
+}
+
+/* HOME */
+.add-movie-btn {
+    align-items: left;
+    text-align: left;
+}
+.textField {
+    width: '100%';
+}
