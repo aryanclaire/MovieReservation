@@ -13,7 +13,6 @@ h4{
 }
 
 p{
-    text-align: left;
     text-indent: 10px;
     margin: 0;
 }
@@ -29,7 +28,6 @@ header{
 }
 
 .secondColumn{
-    font-weight: bold;
     text-align: right;
     padding-right: 4em;
 }
@@ -80,8 +78,6 @@ header{
 }
 
 .payment{
-    text-align: center;
-    align-items: center;
     position: relative;
     margin: 0 auto;
     padding: 1px;
