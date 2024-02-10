@@ -52,6 +52,12 @@ header{
 }
 
 .reservation{
+    background-color: rgb(233, 231, 231);
+    width: 38em;
+    height: fit-content;
+}
+
+.reservation2{
     align-items: center;
     position: relative;
     display: grid;
@@ -60,7 +66,33 @@ header{
     margin: 0 auto;
     padding: 1px;
     background-color: rgb(233, 231, 231);
-    width: 36em;
+    width: 38em;
+    height: fit-content;
+}
+
+.customerDescription{
+    align-items: center;
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 0.2em;
+    margin: 0 auto;
+    padding: 1px;
+    background-color: rgb(233, 231, 231);
+    width: 38em;
+    height: fit-content;
+}
+
+.movieDescription{
+    align-items: center;
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 0.2em;
+    margin: 0 auto;
+    padding: 1px;
+    background-color: rgb(233, 231, 231);
+    width: 38em;
     height: fit-content;
 }
 
@@ -73,16 +105,15 @@ header{
     margin: 0 auto;
     padding: 1px;
     background-color: rgb(233, 231, 231);
-    width: 36em;
+    width: 38em;
     height: fit-content;
 }
 
 .payment{
     position: relative;
-    margin: 0 auto;
     padding: 1px;
     background-color: rgb(233, 231, 231);
-    width: 36em;
+    width: 38em;
     height: fit-content;
 }
 
