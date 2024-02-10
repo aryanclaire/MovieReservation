@@ -53,10 +53,6 @@ export default function Details() {
                     </div>
                 </div>
 
-
-
-                
-
                 <div className='seat'>
                     <div>
                         <h3>Seat Reserved</h3>
