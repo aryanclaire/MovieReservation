@@ -38,13 +38,16 @@ header{
 
 .reservation{
     text-align: center;
-    align-items: center;
+    align-items: center;    
     position: relative;
     margin: 0 auto;
     padding: 1px;
-    background-color: rgb(233, 231, 231);
+    background-color: rgb(233, 231, 231,5);
     width: 36em;
-    height: 20em;
+    height: 23em;
+    box-shadow: inset -8px -8px 12px rgb(185, 191, 194),
+                inset 8px 8px 12px rgb(215, 218, 219);
+                border-radius: 10px;
 }
 
 .seat{
@@ -58,20 +61,23 @@ header{
     background-color: rgb(233, 231, 231);
     width: 36em;
     height: fit-content;
+    box-shadow: inset -8px -8px 12px rgb(185, 191, 194),
+                inset 8px 8px 12px rgb(215, 218, 219);
+    border-radius: 10px;
 }
-
-
 
 .payment{
     text-align: center;
     align-items: center;
     position: relative;
-
     margin: 0 auto;
     padding: 1px;
     background-color: rgb(233, 231, 231);
     width: 36em;
     height: 15em;
+    box-shadow: inset -8px -8px 12px rgb(185, 191, 194),
+                inset 8px 8px 12px rgb(215, 218, 219);
+    border-radius: 10px;
 }
 
 @media screen and (min-width: 1440px){

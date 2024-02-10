@@ -1,5 +1,6 @@
 import React from 'react'
 import './Details.css'
+import { Box, TextField } from '@mui/material'
 
 export default function Details() {
   return (
@@ -8,12 +9,23 @@ export default function Details() {
             <div className='reservation'>
                 <header>
                     <h3>Reservation Description</h3>
-                    
                 </header>
-                
-                <p>
-                    
-                </p>
+                <div className='textfield'>
+                    <Box
+                        component="form"
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            '& > :not(style)': { m: 1, width: '19ch' },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                    >
+                        <TextField id="fname" label="First Name" variant="outlined" />
+                        <TextField id="mname" label="Middle Name" variant="outlined" />
+                        <TextField id="lname" label="Last Name" variant="outlined" />
+                    </Box>
+                </div>
             </div>
 
             <div className='seat'>
@@ -23,9 +35,7 @@ export default function Details() {
                 <div className='smallText'>
                     <p>Total No. of Seats Reserved: 10</p>
                 </div>               
-                <p>
-                    
-                </p>
+        
             </div>
 
             <div className='payment'>
