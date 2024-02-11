@@ -85,13 +85,25 @@ header{
 }
 
 .movie p{
-    font-style: italic;
+    /* font-style: italic;
     font-size: 15px;
     width: calc(50% - 10px); /* Two items per row */
-    margin-right: 5px; /* Adjust as needed */
-    margin-bottom: 0px; /* Adjust as needed */
-    margin-left: -3px;
-    align-items: flex-start;
+    /* margin-right: 5px; /* Adjust as needed */
+    /* margin-bottom: 0px; /* Adjust as needed */
+    /* margin-left: -3px;
+    align-items: flex-start; */
+
+    align-items: center;
+    font-style: italic;
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 0.2em;
+    margin: 0 auto;
+    padding: 1px;
+    background-color: rgb(233, 231, 231);
+    width: 38em;
+    height: fit-content;
 }
 
 .seat{
