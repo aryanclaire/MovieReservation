@@ -6,16 +6,20 @@ h2{
 h3{
     text-align: left;
     text-indent: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 h4{
     text-align: left;
     text-indent: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 p{
-    display: inline;
-    text-indent: 40px;
+    text-indent: 10px;
+    margin: 0;
 }
 
 header{
@@ -25,22 +29,22 @@ header{
 
 .smallText{
     text-align: right;
-    margin-right: 10px;
+    padding-right: 20px;
 }
 
-.checkbox{
-    display: flex;
-    margin-left: 20px;
-    margin-bottom: -15px;
+.secondColumn{
+    text-align: right;
+    padding-right: 4em;
 }
 
-.checkbox p {
-    margin-left: -40px; /* Adjust the distance between the checkbox and the text */
+.total{
+    text-align: right;
+    padding-right: 3em;
 }
 
 .container{
     text-align: center;
-    position:relative;  
+    position: relative;  
     margin: auto;
     max-width: 100%;
     max-height: 100%;
@@ -53,48 +57,13 @@ header{
 }
 
 .reservation{
-    text-align: center;
-    align-items: center;    
-    position: relative;
-    margin: 0 auto;
-    padding: 1px;
-    background-color: rgb(233, 231, 231,5);
-    width: 36em;
-    height: 23em;
-    box-shadow: inset -8px -8px 12px rgb(185, 191, 194),
-                inset 8px 8px 12px rgb(215, 218, 219);
-                border-radius: 10px;
+    background-color: rgb(233, 231, 231);
+    width: 50em;
+    height: 22em;
+    /* height: fit-content; */
 }
 
-.textfield{
-    margin-bottom: -20px;
-}
-
-.reservation h4{
-    text-align: left;
-    text-indent: 10px;
-    margin-bottom: -2px;
-}
-
-.movie{
-    display: grid;
-    grid-template-columns: auto auto auto;
-    flex-wrap: wrap;
-    justify-content: space-between; /* Justify content between items */
-    align-items: flex-start;
-}
-
-.movie p{
-    font-style: italic;
-    font-size: 15px;
-    width: calc(50% - 10px); /* Two items per row */
-    margin-right: 5px; /* Adjust as needed */
-    margin-bottom: 0px; /* Adjust as needed */
-    margin-left: -3px;
-    align-items: flex-start;
-}
-
-.seat{
+.reservation2{
     align-items: center;
     position: relative;
     display: grid;
@@ -103,25 +72,180 @@ header{
     margin: 0 auto;
     padding: 1px;
     background-color: rgb(233, 231, 231);
-    width: 36em;
+    width: 50em;
     height: fit-content;
+}
+
+.customerDescription{
+    align-items: center;
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 0.2em;
+    margin: 0 auto;
+    padding: 1px;
+    background-color: rgb(233, 231, 231);
+    width: 50em;
+    height: fit-content;
+}
+
+.checkbox{
+    display: flex;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.checkbox p {
+    margin-left: 0px; /* Adjust the distance between the checkbox and the text */
+    margin-top: 10px;
+}
+
+.movieDescription{
+    font-style: italic;
+    align-items: center;
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 0.3em;
+    margin: 0 auto;
+    padding: 1px;
+    background-color: rgb(233, 231, 231);
+    width: 50em;
+    height: fit-content;
+}
+
+.seat{
+    align-items: center;
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 2em;
+    margin: 0 auto;
+    padding: 1px;
+    background-color: rgb(233, 231, 231);
+    width: 50em;
+    height: fit-content;
+}
+
+.payment{
+    position: relative;
+    padding: 1px;
+    background-color: rgb(233, 231, 231);
+    width: 50em;
+    height: 10em;
+    /* height: fit-content; */
+}
+
+.payment2{
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 2em;
+    margin: 0 auto;
+    height: fit-content;
+}
+
+.cancelPayBtn{
+    background-color: gray !important;
+}
+
+.paymentBtn{
+    background-color: #007bff;
+    color: white;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+
+.payIcon{
+    width: 103px; 
+    height: 100px;
+    margin: 25px 0px -15px 140px;
+ 
+}
+
+.outside{
+    width: 500px;
+    background-color: whitesmoke;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #000;
+    box-shadow: 24;
+}
+
+.modalContent{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: whitesmoke;
+    /* border: 2px solid #000; */
+    box-shadow: 24;
     box-shadow: inset -8px -8px 12px rgb(185, 191, 194),
                 inset 8px 8px 12px rgb(215, 218, 219);
     border-radius: 10px;
 }
 
-.payment{
+.modalContent h2{
     text-align: center;
-    align-items: center;
-    position: relative;
-    margin: 0 auto;
-    padding: 1px;
-    background-color: rgb(233, 231, 231);
-    width: 36em;
-    height: 15em;
+}
+
+.modalContent p{
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cancelBtn{
+    background-color: gray !important;
+    gap: 16px;
+}
+
+.confirmBtn{
+    
+}
+
+.addInfo{
+    font-style: italic;
+}
+
+.successContent{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    text-align: center;
+    background-color: whitesmoke;
+    /* border: 2px solid #000; */
+    box-shadow: 24;
     box-shadow: inset -8px -8px 12px rgb(185, 191, 194),
                 inset 8px 8px 12px rgb(215, 218, 219);
     border-radius: 10px;
+}
+
+.successContent h2{
+    text-align: center;
+}
+
+.success{
+    background-color: #9BBCCA;
+    height: 160px;
+}
+
+.successContent p{
+    text-align: center;
+}
+
+.successIcon{
+    width: 144px;
+    height: 140px;
+    align-content: center;
+    margin: 10px 0px 0px 0px;
 }
 
 @media screen and (min-width: 1440px){
