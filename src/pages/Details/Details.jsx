@@ -6,7 +6,7 @@ import successPaymentIcon from '../../assets/verified.png'
 
 
 export default function Details() {
-    const [checked, setChecked] = useState(true);
+    const [checked, setChecked] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [middleName, setMiddleName] = useState('');
@@ -23,11 +23,12 @@ export default function Details() {
         setPaymentConfirmed(true);
         setOpenModal(false); // Close the payment modal
     };
-    const handlePaymentSuccessModalClose = () => {
+    const handlePaymentSuccessModalClose = (event) => {
         // Reset form fields
         setFirstName('');
         setMiddleName('');
         setLastName('');
+        setChecked(event.target.checked);
         setPaymentConfirmed(false);
     };
     const handleUpdateSeats = () => {
@@ -107,7 +108,7 @@ export default function Details() {
                         
                         <div className='checkbox'>
                             <Checkbox
-                                // checked={checked}
+                                checked={checked}
                                 onChange={handleChange}
                                 inputProps={{ 'aria-label': 'controlled' }}
                             /> <p>Senior Citizen</p>
