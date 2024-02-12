@@ -47,7 +47,7 @@ export default function TabsCont() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', marginTop: '20px' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
           value={value}

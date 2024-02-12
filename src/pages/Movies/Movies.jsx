@@ -12,7 +12,7 @@ import DateCont from '../../main_components/DateCont';
 
 const MoviesBox = styled(Box)({
   display: 'flex',
-  gap: '5%',
+  gap: '2%',
 
 });
 // Form
@@ -21,7 +21,7 @@ const FormBox = styled(Box)`
 `;
 // 
 const DisplayData = styled(Box)({
-  width: '70%',
+  width: '73%',
 });
 
 const TextFieldCont = styled(TextField)({
@@ -56,7 +56,7 @@ export default function Movies() {
   return (
     <MoviesBox >
       {/* for input and update */}
-      <FormBox  >
+      <FormBox style={{background:'#fff', padding: '25px', borderRadius: '10px'}} >
         <Box>
           <Button variant="text" style={{color:'#0D99FF'}}>Add Movies</Button>
         </Box>
@@ -147,7 +147,7 @@ export default function Movies() {
       </FormBox>
 
       {/* for display data */}
-      <DisplayData>
+      <DisplayData style={{background:'#fff', padding: '25px', borderRadius: '10px'}}>
         {/* Search for date */}
         <Box style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
           <Box>

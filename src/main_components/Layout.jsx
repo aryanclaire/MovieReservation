@@ -78,6 +78,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
+    background: '#000',
+
     ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
@@ -88,6 +90,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
   }),
 );
+
+const ListItemTextStyled = styled(ListItemText)(({ theme }) => ({
+  color: theme.palette.primary.main,
+}));
+
+const ListItemIconStyled = styled(ListItemIcon)(({ theme }) => ({
+  color: theme.palette.primary.main,
+}));
 
 export default function MiniDrawer() {
   const theme = useTheme();
@@ -102,7 +112,7 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex',  background:'#efefef', height: '100vh' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open} sx={{ backgroundColor: '#fff', color: '#000' }}>
         <Toolbar>
@@ -124,9 +134,9 @@ export default function MiniDrawer() {
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open} 
-        style={{ background: '#000'}}
+        style={{background: '#000'}}
       >
-        <DrawerHeader>
+        <DrawerHeader >
           <IconButton onClick={handleDrawerClose} >
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
@@ -136,24 +146,24 @@ export default function MiniDrawer() {
           {/* go to home */}
           <ListItem key='Home' disablePadding>
             <ListItemButton component={Link} to="/"> {/* Use component prop for custom link */}
-                <ListItemIcon><HomeIcon/></ListItemIcon>
-                <ListItemText primary='Home' />
+                <ListItemIconStyled><HomeIcon/></ListItemIconStyled>
+                <ListItemTextStyled primary='Home' />
             </ListItemButton>
           </ListItem>
 
           {/* go to movies */}
           <ListItem key='Movies' disablePadding>
             <ListItemButton component={Link} to="/movies"> {/* Use component prop for custom link */}
-                <ListItemIcon><LiveTvIcon/></ListItemIcon>
-                <ListItemText primary='Movies' />
+                <ListItemIconStyled><LiveTvIcon/></ListItemIconStyled>
+                <ListItemTextStyled primary='Movies' />
             </ListItemButton>
           </ListItem>
         
           {/* go to movies */}
           <ListItem key='Details' disablePadding>
             <ListItemButton component={Link} to="/details"> {/* Use component prop for custom link */}
-                <ListItemIcon><DescriptionIcon/></ListItemIcon>
-                <ListItemText primary='Details' />
+                <ListItemIconStyled><DescriptionIcon/></ListItemIconStyled>
+                <ListItemTextStyled primary='Details' />
             </ListItemButton>
           </ListItem>
         </List>
