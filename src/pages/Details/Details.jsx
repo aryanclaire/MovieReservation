@@ -9,6 +9,9 @@ export default function Details() {
     const [checked, setChecked] = useState(true);
     const [openModal, setOpenModal] = useState(false);
     const [fullName, setFullName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [middleName, setMiddleName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [accountNumber, setAccountNumber] = useState('');
     const [amountToPay, setAmountToPay] = useState('');
     const [paymentConfirmed, setPaymentConfirmed] = useState(false);
