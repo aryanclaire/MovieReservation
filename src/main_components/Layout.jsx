@@ -20,7 +20,8 @@ import { Link, Outlet } from 'react-router-dom';
 
 import HomeIcon from '@mui/icons-material/Home';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
-import DescriptionIcon from '@mui/icons-material/Description'
+import DescriptionIcon from '@mui/icons-material/Description';
+import WeekendIcon from '@mui/icons-material/Weekend';
 
 const drawerWidth = 240;
 
@@ -147,11 +148,19 @@ export default function MiniDrawer() {
             </ListItemButton>
           </ListItem>
         
-          {/* go to movies */}
+          {/* go to details */}
           <ListItem key='Details' disablePadding>
             <ListItemButton component={Link} to="/details"> {/* Use component prop for custom link */}
                 <ListItemIcon><DescriptionIcon/></ListItemIcon>
                 <ListItemText primary='Details' />
+            </ListItemButton>
+          </ListItem>
+
+          {/* go to reservation */}
+          <ListItem key='Reserve' disablePadding>
+            <ListItemButton component={Link} to="/reserve"> {/* Use component prop for custom link */}
+                <ListItemIcon><WeekendIcon/></ListItemIcon>
+                <ListItemText primary='Reserve' />
             </ListItemButton>
           </ListItem>
 
