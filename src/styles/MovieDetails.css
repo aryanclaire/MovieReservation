@@ -7,34 +7,95 @@ body{
 .main-wrapper{
     display: flex;
     width: 100%;
-    height: 100%;
-    border: solid yellow;
+    height: 100vh;
     justify-content: space-between;
 }
 
 .movieDetails-wrapper{
+    border-radius: 1.5em;
     width: 45%;
     height: 100%;
-    border: solid red;
+    padding: 1.5em;
+    background-color: white; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+}
+.movieDescription {
+    display: flex;
 }
 
-.moviePoster{
-    /* position: relative; */
-    width: 80%;
-    height: 100%;
-    background-color: pink; 
+.moviePoster {
+    width: 45%;
+    height: 20em;
+    background-color: pink;
     border: solid gray;
-    
+    margin-right: 1em; 
 }
-/* 
-.movieTitle{
-    float: right;
-} */
 
+.movieTitle {
+    width: 50%;
+    margin-right: auto; 
+    text-align: left; 
+}
+
+.title{
+    border-bottom: solid 2px #0D99FF;
+}
+
+.movieDetails{
+    font-size: .75em;
+    margin-right: 1em; 
+    text-align: left; 
+}
+
+.otherDetails{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.legend {
+    font-size: .75em;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-right: 5em;
+}
+
+.legend-item {
+    display: flex; 
+    align-items: center; 
+    margin: 0;
+}
+
+.legend-box {
+    width: 20px;
+    height: 20px;
+}
+
+.unavailable{
+    background-color: gray;
+}
+
+.available{
+    background-color: #03fc62;
+}
+.legend-text {
+    margin-left: 5px; 
+}
+
+.summary{
+    font-size: .75em;
+    margin-right: 1em;
+    text-align: left;
+}
 .seatLayout-wrapper{
+    border-radius: 1.5em;
     width: 45%;
     height: 100%;
-    border: solid green;
+    padding: 1.5em;
+    background-color: white; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
 }
 
 .header{
@@ -51,23 +112,115 @@ body{
 }
 
 .seat-layout {
-  margin-top: 20px ;
-  display: grid;
-  grid-template-columns: repeat(1, 1fr); /* 8 columns */
-  gap: 20px; /* Gap between seats */
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); 
+    gap: 15px; 
 }
 
 .row {
-  display: flex;
+    display: flex;
+    gap: 0.25em;
 }
 
 .seat {
-  width: 40px;
-  height: 40px;
-  background-color: #ccc;
-  margin: auto;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color:  #03fc62;
+    margin: auto;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.entrance-exit-wrapper{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25em;
+}
+
+.entrance-exit{
+    background-color: #ccc;
+}
+
+h1{
+    font-size: 1.25em;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between; 
+    border-radius: 20px;
+    box-shadow: none;
+}
+
+.button1 {
+    background-color: #69737B;
+    border-radius: 20px; 
+    box-shadow: none;
+}
+
+.button2 {
+    background-color: #0D99FF;
+    border-radius: 20px;
+    box-shadow: none;
+}
+
+.seat.reserved {
+    background-color:#ccc; 
+}
+
+.entrance-exit-wrapper,
+.buttons {
+    display: flex;
+    justify-content: space-around; 
+    margin-top: 20px;
+}
+
+.seat:hover {
+    background-color: #999; 
+    cursor: pointer; 
+}
+
+.buttons button:hover {
+    color: #fff;
+    cursor: pointer; 
+}
+
+@media (max-width: 768px) {
+    .main-wrapper {
+        flex-direction: column; 
+    }
+
+    .movieDetails-wrapper,
+    .seatLayout-wrapper {
+        width: 100%;
+        margin-bottom: 20px; 
+    }
+
+    .moviePoster {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .movieTitle {
+        width: 100%;
+        margin-right: 0; 
+        text-align: center;
+    }
+
+    .movieDetails {
+        width: 100%; 
+        margin-right: 0;
+        text-align: center;
+    }
+
+    .seatLayout-wrapper .buttons {
+        flex-direction: column;
+    }
+
+    .buttons button {
+        width: 100%; 
+    }
 }
