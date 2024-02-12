@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './Details.css'
-import { Box, Button, Checkbox, Modal, Stack, TextField } from '@mui/material'
+import { Box, Button, Checkbox, Modal, Stack, TextField, Backdrop } from '@mui/material'
 import confirmPaymentIcon from '../../assets/secure-payment.png'
 import successPaymentIcon from '../../assets/verified.png'
 
@@ -8,27 +8,14 @@ import successPaymentIcon from '../../assets/verified.png'
 export default function Details() {
     const [checked, setChecked] = useState(true);
     const [openModal, setOpenModal] = useState(false);
-    const [fullName, setFullName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [middleName, setMiddleName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [accountNumber, setAccountNumber] = useState('');
-    const [amountToPay, setAmountToPay] = useState('');
     const [paymentConfirmed, setPaymentConfirmed] = useState(false);
 
     const handleChange = (event) => {
         setChecked(event.target.checked);
       };
-    const handleOpenModal = () => {
-        // Check if all fields are filled out
-        if (fullName.trim() === '' || accountNumber.trim() === '' || amountToPay.trim() === '') {
-            alert('Please fill out all fields.');
-            return;
-        }
-
-    // Proceed to payment modal
-    setOpenModal(true);
-    }; 
     const handleCloseModal = () => {
         setOpenModal(false);
     }; 
@@ -37,15 +24,18 @@ export default function Details() {
         setOpenModal(false); // Close the payment modal
     };
     const handlePaymentSuccessModalClose = () => {
+        // Reset form fields
+        setFirstName('');
+        setMiddleName('');
+        setLastName('');
         setPaymentConfirmed(false);
     };
     const handleUpdateSeats = () => {
         // Navigate to the new screen when "Update Seats" button is clicked
-        
     };
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (fullName.trim() === '' || accountNumber.trim() === '' || amountToPay.trim() === '') {
+        if (firstName.trim() === '' || middleName.trim() === '' || lastName.trim() === '') {
             alert('Please provide your complete name!');
             return;
         }
@@ -59,9 +49,13 @@ export default function Details() {
         // Handle submission of form data
         // Here you can perform any validation or processing before submitting the form
         console.log('Form submitted!');
-        console.log('Full Name:', fullName);
-        console.log('Account Number:', accountNumber);
-        console.log('Amount to Pay:', amountToPay);
+        console.log('First Name:', firstName);
+        console.log('Middle Name:', middleName);
+        console.log('Last Name:', lastName);
+    };
+    const handleBackdropClick = (event) => {
+        // Prevent closing the modal if the backdrop is clicked
+        event.stopPropagation();
     };
     return (
         <div className='container1'>
@@ -91,22 +85,22 @@ export default function Details() {
                                 <TextField 
                                     id="fname" 
                                     label="First Name" 
-                                    variant="outlined" value={fullName}
-                                    onChange={(e) => setFullName(e.target.value)} 
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)} 
                                 />
                                 <TextField 
                                     id="mname" 
                                     label="Middle Name" 
                                     variant="outlined" 
-                                    value={accountNumber}
-                                    onChange={(e) => setAccountNumber(e.target.value)}
+                                    value={middleName}
+                                    onChange={(e) => setMiddleName(e.target.value)}
                                 />
                                 <TextField 
                                     id="lname" 
                                     label="Last Name" 
                                     variant="outlined" 
-                                    value={amountToPay}
-                                    onChange={(e) => setAmountToPay(e.target.value)}
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
                                 />
                             </Box>
                         </div>
@@ -215,11 +209,16 @@ export default function Details() {
                     </Stack>
 
                     {/* Payment modal */}
-                    <Modal open={openModal} onClose={handleCloseModal}>
+                    <Modal 
+                        open={openModal} 
+                        onClose={handleCloseModal} 
+                        BackdropComponent={Backdrop} 
+                        BackdropProps={{ onClick: handleBackdropClick }}
+                    >
                         <Box className='modalContent'>
                             <img src={confirmPaymentIcon} alt="Confirm Payment Icon" className='payIcon'/>
                             <h2>Confirm Payment</h2>
-                            <p>Name:           Juan Karlos</p>
+                            <p>Name:           {firstName} {middleName} {lastName}</p>
                             <p>Account Number: 0999-23-323-33</p>
                             <p>Amount to Pay:  1,120</p>
                             <Stack spacing={5} direction="row" marginTop={5} marginLeft={10} marginBottom={5}>
@@ -253,7 +252,12 @@ export default function Details() {
                         </Box>
                     </Modal>  
 
-                    <Modal open={paymentConfirmed} onClose={handlePaymentSuccessModalClose}>
+                    <Modal 
+                        open={paymentConfirmed} 
+                        onClose={handlePaymentSuccessModalClose} 
+                        BackdropComponent={Backdrop} 
+                        BackdropProps={{ onClick: handleBackdropClick }}
+                    >
                         <Box className='successContent'>
                             <div className='success'>
                                 <img src={successPaymentIcon} alt="Success Payment Icon" className='successIcon'/>
