@@ -20,7 +20,6 @@ import { Link, Outlet } from 'react-router-dom';
 
 import HomeIcon from '@mui/icons-material/Home';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
-import 'D:/MovieReservation/MovieReservation/src/styles/Home.css';
 import DescriptionIcon from '@mui/icons-material/Description'
 
 const drawerWidth = 240;
@@ -157,12 +156,7 @@ export default function MiniDrawer() {
                 <ListItemText primary='Details' />
             </ListItemButton>
           </ListItem>
-
         </List>
-
-        
-        
-     
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
