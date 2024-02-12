@@ -57,8 +57,8 @@ header{
 }
 
 .reservation{
-    background-color: rgb(233, 231, 231);
-    width: 50em;
+    background-color: rgb(231, 233, 233);
+    width: 40em;
     height: 22em;
     /* height: fit-content; */
 }
@@ -72,7 +72,7 @@ header{
     margin: 0 auto;
     padding: 1px;
     background-color: rgb(233, 231, 231);
-    width: 50em;
+    width: 40em;
     height: fit-content;
 }
 
@@ -85,7 +85,7 @@ header{
     margin: 0 auto;
     padding: 1px;
     background-color: rgb(233, 231, 231);
-    width: 50em;
+    width: 40em;
     height: fit-content;
 }
 
@@ -110,7 +110,7 @@ header{
     margin: 0 auto;
     padding: 1px;
     background-color: rgb(233, 231, 231);
-    width: 50em;
+    width: 40em;
     height: fit-content;
 }
 
@@ -123,17 +123,23 @@ header{
     margin: 0 auto;
     padding: 1px;
     background-color: rgb(233, 231, 231);
-    width: 50em;
+    width: 40em;
     height: fit-content;
+    box-shadow: inset -8px -8px 12px rgb(185, 191, 194),
+                inset 8px 8px 12px rgb(215, 218, 219);
+    border-radius: 10px;
 }
 
 .payment{
     position: relative;
     padding: 1px;
     background-color: rgb(233, 231, 231);
-    width: 50em;
+    width: 40em;
     height: 10em;
     /* height: fit-content; */
+    box-shadow: inset -8px -8px 12px rgb(185, 191, 194),
+                inset 8px 8px 12px rgb(215, 218, 219);
+    border-radius: 10px;
 }
 
 .payment2{
@@ -157,12 +163,10 @@ header{
     border-radius: 5px;
 }
 
-
 .payIcon{
     width: 103px; 
     height: 100px;
     margin: 25px 0px -15px 140px;
- 
 }
 
 .outside{
@@ -200,14 +204,14 @@ header{
     flex-direction: column;
 }
 
-.cancelBtn{
+/* .cancelBtn{
     background-color: gray !important;
-    gap: 16px;
+    border-radius: 10px;
 }
 
 .confirmBtn{
     
-}
+} */
 
 .addInfo{
     font-style: italic;
@@ -218,7 +222,7 @@ header{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
+    width: 450px;
     text-align: center;
     background-color: whitesmoke;
     /* border: 2px solid #000; */

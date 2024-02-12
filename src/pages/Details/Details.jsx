@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './Details.css'
-import { Box, Button, Checkbox, Modal, TextField } from '@mui/material'
+import { Box, Button, Checkbox, Modal, Stack, TextField } from '@mui/material'
 import confirmPaymentIcon from '../../assets/secure-payment.png'
 import successPaymentIcon from '../../assets/verified.png'
 
@@ -17,7 +17,14 @@ export default function Details() {
         setChecked(event.target.checked);
       };
     const handleOpenModal = () => {
-        setOpenModal(true);
+        // Check if all fields are filled out
+        if (fullName.trim() === '' || accountNumber.trim() === '' || amountToPay.trim() === '') {
+            alert('Please fill out all fields.');
+            return;
+        }
+
+    // Proceed to payment modal
+    setOpenModal(true);
     }; 
     const handleCloseModal = () => {
         setOpenModal(false);
@@ -33,6 +40,26 @@ export default function Details() {
         // Navigate to the new screen when "Update Seats" button is clicked
         
     };
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (fullName.trim() === '' || accountNumber.trim() === '' || amountToPay.trim() === '') {
+            alert('Please provide your complete name!');
+            return;
+        }
+
+        // Proceed to payment modal
+        setOpenModal(true);
+        // Perform submission logic here
+        // For example, you can send the form data to an API endpoint
+        
+        // After submission, you can reset the form fields
+        // Handle submission of form data
+        // Here you can perform any validation or processing before submitting the form
+        console.log('Form submitted!');
+        console.log('Full Name:', fullName);
+        console.log('Account Number:', accountNumber);
+        console.log('Amount to Pay:', amountToPay);
+    };
     return (
         <div className='container1'>
             <div className='container2'>
@@ -45,8 +72,8 @@ export default function Details() {
                             <p>ID: 001-9203-937</p>
                         </div>
                     </div>
-                    <p><b>Customer Description</b></p>
-                    <div className='textfield'>
+                        <p><b>Customer Description</b></p>
+                        <div className='textfield'>
                             <Box
                                 component="form"
                                 sx={{
@@ -56,21 +83,39 @@ export default function Details() {
                                 }}
                                 noValidate
                                 autoComplete="off"
+                                onSubmit={handleSubmit}
                             >
-                                <TextField id="fname" label="First Name" variant="outlined" />
-                                <TextField id="mname" label="Middle Name" variant="outlined" />
-                                <TextField id="lname" label="Last Name" variant="outlined" />
+                                <TextField 
+                                    id="fname" 
+                                    label="First Name" 
+                                    variant="outlined" value={fullName}
+                                    onChange={(e) => setFullName(e.target.value)} 
+                                />
+                                <TextField 
+                                    id="mname" 
+                                    label="Middle Name" 
+                                    variant="outlined" 
+                                    value={accountNumber}
+                                    onChange={(e) => setAccountNumber(e.target.value)}
+                                />
+                                <TextField 
+                                    id="lname" 
+                                    label="Last Name" 
+                                    variant="outlined" 
+                                    value={amountToPay}
+                                    onChange={(e) => setAmountToPay(e.target.value)}
+                                />
                             </Box>
                         </div>
                         
                         <div className='checkbox'>
                             <Checkbox
-                                checked={checked}
+                                // checked={checked}
                                 onChange={handleChange}
                                 inputProps={{ 'aria-label': 'controlled' }}
                             /> <p>Senior Citizen</p>
-                    </div>
-                    <p><b>Movie Description</b></p>
+                        </div>
+                        <p><b>Movie Description</b></p>
                     <div className='movieDescription'>
                         <p>Movie Title: Rewind</p>
                         <p></p>
@@ -84,29 +129,43 @@ export default function Details() {
                         <p>MPA FILM RATING: Rated G</p>
                     </div>
                 </div>
-
-                <div className='seat'>
-                    <div>
-                        <h3>Seat Reserved</h3>
+                
+                <div className="seat-cont">
+                    <div className='seat'>
+                        <div>
+                            <h3>Seat Reserved</h3>
+                        </div>
+                        <div className='smallText'>
+                            <p>Total No. of Seats Reserved: 4</p>
+                        </div>
+                        <h4> SEAT ID</h4>
+                        <h4 className='secondColumn'>PRICE</h4>
+                        <p>C1</p>
+                        <p className='secondColumn'>350.00</p>
+                        <p>C2</p>
+                        <p className='secondColumn'>350.00</p>
+                        <p>C3</p>
+                        <p className='secondColumn'>350.00</p>
+                        <p>C4</p>
+                        <p className='secondColumn'>350.00</p>
+                        <p></p>
+                        <h4 className='total'>TOTAL: 1,400.00</h4>
                     </div>
-                    <div className='smallText'>
-                        <p>Total No. of Seats Reserved: 4</p>
+                    <div className="seat-btn">
+                        <Button 
+                            variant="contained" 
+                            onClick={handleUpdateSeats}
+                            sx={{
+                                width:'200px',
+                                marginTop: '25px',
+                                marginBottom: '15px',
+                                borderRadius: '10px',
+                                marginLeft: '460px'
+                            }}
+                        >
+                            Update Seats
+                        </Button>   
                     </div>
-                    <h4> SEAT ID</h4>
-                    <h4 className='secondColumn'>PRICE</h4>
-                    <p>C1</p>
-                    <p className='secondColumn'>350</p>
-                    <p>C2</p>
-                    <p className='secondColumn'>350</p>
-                    <p>C3</p>
-                    <p className='secondColumn'>350</p>
-                    <p>C4</p>
-                    <p className='secondColumn'>350</p>
-                    <p></p>
-                    <h4 className='total'>TOTAL: 1,400.00</h4>
-                    <Button variant="contained" onClick={handleUpdateSeats} className='updateSeatBtn'>
-                        Update Seats
-                    </Button>   
                 </div>
 
                 <div className='payment'>
@@ -123,12 +182,34 @@ export default function Details() {
                         <p></p>
                         <h4 className='total'>AMOUNT TO PAY: 1,120.00</h4>
                     </div>
-                    <Button variant="contained" onClick={handleCloseModal} className='cancelPayBtn'>
-                        Cancel
-                    </Button>
-                    <Button variant="contained" onClick={handleOpenModal} className='paymentBtn'>
-                        Proceed to Payment
-                    </Button>
+                    <Stack spacing={10} direction="row" marginTop={5} marginLeft={3}>
+                        <Button 
+                            variant="contained" 
+                            onClick={handleCloseModal} 
+                            // className='cancelPayBtn' 
+                            sx={{
+                                width:'250px',
+                                backgroundColor: 'gray',
+                                '&:hover': {
+                                    backgroundColor: 'gray',
+                                },
+                                borderRadius: '10px'
+                            }}
+                        >
+                            Cancel
+                        </Button>
+                        <Button 
+                            variant="contained" 
+                            onClick={handleSubmit} 
+                            // className='paymentBtn'
+                            sx={{
+                                width:'250px',
+                                borderRadius: '10px'
+                            }}
+                        >
+                            Proceed to Payment
+                        </Button>
+                    </Stack>
 
                     {/* Payment modal */}
                     <Modal open={openModal} onClose={handleCloseModal}>
@@ -138,8 +219,34 @@ export default function Details() {
                             <p>Name:           Juan Karlos</p>
                             <p>Account Number: 0999-23-323-33</p>
                             <p>Amount to Pay:  1,120</p>
-                            <Button variant='contained' onClick={handleCloseModal} className='cancelBtn'>Cancel</Button>
-                            <Button variant='contained' onClick={handleConfirmPayment} className='confirmBtn'>Confirm</Button>
+                            <Stack spacing={5} direction="row" marginTop={5} marginLeft={10} marginBottom={5}>
+                                <Button 
+                                    variant='contained' 
+                                    onClick={handleCloseModal} 
+                                    // className='cancelBtn'
+                                    sx={{
+                                        width:'100px',
+                                        borderRadius: '10px',
+                                        backgroundColor: 'gray',
+                                        '&:hover': {
+                                            backgroundColor: 'gray',
+                                        },
+                                    }}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button 
+                                    variant='contained' 
+                                    onClick={handleConfirmPayment} 
+                                    // className='confirmBtn'
+                                    sx={{
+                                        width:'100px',
+                                        borderRadius: '10px'
+                                    }}
+                                >
+                                    Confirm
+                                </Button>
+                            </Stack>
                         </Box>
                     </Modal>  
 
@@ -151,7 +258,19 @@ export default function Details() {
                             <h2>Payment Successful</h2>
                             <p className='processed'>Your payment has been successfully processed.</p>
                             <p className='addInfo'>Please check your email for your reservation details.</p>
-                            <Button variant='contained' onClick={handlePaymentSuccessModalClose} className='doneBtn'>Done</Button>
+                            <Button 
+                                variant='contained'
+                                onClick={handlePaymentSuccessModalClose} 
+                                className='doneBtn'
+                                sx={{
+                                    width:'100px',
+                                    marginTop: '15px',
+                                    marginBottom: '15px',
+                                    borderRadius: '10px'
+                                }}
+                            >
+                                Done
+                            </Button>
                         </Box>
                     </Modal>        
                 </div>
