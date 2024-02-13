@@ -1,7 +1,13 @@
 import React from 'react'
+import '../../styles/Details.css';
+
 
 export default function Details() {
   return (
-    <div>Details</div>
+    <div className='container1'>
+        <div className='container2'>
+
+        </div>
+    </div>
   )
 }
