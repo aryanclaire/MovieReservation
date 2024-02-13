@@ -43,12 +43,7 @@ export default function Details() {
 
         // Proceed to payment modal
         setOpenModal(true);
-        // Perform submission logic here
-        // For example, you can send the form data to an API endpoint
         
-        // After submission, you can reset the form fields
-        // Handle submission of form data
-        // Here you can perform any validation or processing before submitting the form
         console.log('Form submitted!');
         console.log('First Name:', firstName);
         console.log('Middle Name:', middleName);
@@ -219,9 +214,9 @@ export default function Details() {
                         <Box className='modalContent'>
                             <img src={confirmPaymentIcon} alt="Confirm Payment Icon" className='payIcon'/>
                             <h2>Confirm Payment</h2>
-                            <p>Name:           {firstName} {middleName} {lastName}</p>
-                            <p>Account Number: 0999-23-323-33</p>
-                            <p>Amount to Pay:  1,120</p>
+                            <p>Name:            {firstName} {middleName} {lastName}</p>
+                            <p>Reservation ID:  001-9203-937</p>
+                            <p>Amount to Pay:   ₱ 1,120</p>
                             <Stack spacing={5} direction="row" marginTop={5} marginLeft={10} marginBottom={5}>
                                 <Button 
                                     variant='contained' 
