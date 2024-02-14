@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'
 import '../../styles/Details.css';
 import { Backdrop, Box, Button, Checkbox, Grid, Modal, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import confirmPaymentIcon from '../../assets/secure-payment.png';
@@ -11,6 +12,7 @@ export default function Details() {
     const [firstName, setFirstName] = useState('');
     const [middleName, setMiddleName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [selectedSeats, setSelectedSeats] = useState([]);
     const [paymentConfirmed, setPaymentConfirmed] = useState(false);
 
     const handleChange = (event) => {
@@ -28,11 +30,22 @@ export default function Details() {
         setFirstName('');
         setMiddleName('');
         setLastName('');
+        setSelectedSeats([]);
         setChecked(event.target.checked);
         setPaymentConfirmed(false);
     };
-    const handleUpdateSeats = () => {
-        // Navigate to the new screen when "Update Seats" button is clicked
+    const handleUpdateSeats = (seatId) => {
+        setSelectedSeats([...selectedSeats, seatId]); // Add the selected seat to the array
+    };
+    const handleCancel = () => {
+        // Empty selected seats
+        emptySelectedSeats();
+
+        // Clear form fields
+        setFirstName('');
+        setMiddleName('');
+        setLastName('');
+        setChecked(false);
     };
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -52,6 +65,10 @@ export default function Details() {
     const handleBackdropClick = (event) => {
         // Prevent closing the modal if the backdrop is clicked
         event.stopPropagation();
+    };
+    const emptySelectedSeats = () => {
+        // Empty selected seats by resetting the state variable to an empty array
+        setSelectedSeats([]);
     };
 
     return (
@@ -173,12 +190,15 @@ export default function Details() {
                     </div>
                     <div className="seat-btn">
                         <Button
+                            as={Link}
+                            to="/reserve"
                             variant="contained" 
                             onClick={handleUpdateSeats}
                             sx={{
                                 width:'150px',
                                 top:'160px',
-                                left:'230px'
+                                left:'230px',
+                                textDecoration:'none'
                             }}
                         >
                             Update Seats
@@ -215,17 +235,20 @@ export default function Details() {
                         </TableContainer>
                     </div>
 
-                    <Stack spacing={10} direction="row" marginTop={4} marginBottom={2} justifyContent='center'>
+                    <Stack spacing={10} direction="row" marginTop={2} marginBottom={1.5} justifyContent='center'>
                         <Button 
+                            as={Link}
+                            to="/movies"
                             variant="contained" 
-                            onClick={handleCloseModal}
+                            onClick={handleCancel}
                             sx={{
                                 width:'205px',
                                 backgroundColor: 'gray',
                                 '&:hover': {
                                     backgroundColor: 'gray',
                                 },
-                                borderRadius: '5px'
+                                borderRadius: '5px',
+                                textDecoration:'none'
                             }}
                         >
                             Cancel
@@ -239,7 +262,7 @@ export default function Details() {
                             }}
                         >
                             Proceed to Payment
-                        </Button>
+                        </Button>   
                     </Stack>
 
                     {/* Payment modal */}

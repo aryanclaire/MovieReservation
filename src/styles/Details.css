@@ -53,6 +53,10 @@
     margin-top: 15px;
 }
 
+.seat-btn{
+    margin: 180px 5px 15px 475px
+}
+
 .payment{
     background-color: rgb(231, 233, 233);
     width: 40em;
