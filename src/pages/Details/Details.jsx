@@ -1,27 +1,61 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import '../../styles/Details.css';
-import { Backdrop, Box, Button, Checkbox, Grid, Modal, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
+import { Backdrop, Box, Button, Grid, IconButton, Modal, Paper, 
+    Stack, Table, TableBody, TableCell, TableContainer, TableHead, 
+    TableRow, TextField, Typography } from '@mui/material';
 import confirmPaymentIcon from '../../assets/secure-payment.png';
 import successPaymentIcon from '../../assets/verified.png';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 
 export default function Details() {
-    const [checked, setChecked] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [middleName, setMiddleName] = useState('');
     const [lastName, setLastName] = useState('');
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [paymentConfirmed, setPaymentConfirmed] = useState(false);
+    const [seniorCount, setSeniorCount] = useState(0);
 
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-      };
     const handleCloseModal = () => {
         setOpenModal(false);
     }; 
-    const handleConfirmPayment = () => {
+    const handleOpenModal = (e) => {
+        e.preventDefault()
+        if (firstName.trim() === '' || middleName.trim() === '' || lastName.trim() === '') {
+            alert(`Please enter customer's complete name.`);
+            return;
+        }
+        setOpenModal(true);
+    };
+    const handleConfirmPayment = async (e) => {
+        e.preventDefault();
+        const formData = {
+            f_name: firstName,
+            m_name: middleName,
+            l_name: lastName,
+            senior: seniorCount
+        };
+    
+        try {
+            const response = await fetch('http://localhost:5555/api/details/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to submit data');
+            }
+            // Proceed to success modal
+            setOpenModal(true);
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }
         setPaymentConfirmed(true);
         setOpenModal(false); // Close the payment modal
     };
@@ -31,7 +65,6 @@ export default function Details() {
         setMiddleName('');
         setLastName('');
         setSelectedSeats([]);
-        setChecked(event.target.checked);
         setPaymentConfirmed(false);
     };
     const handleUpdateSeats = (seatId) => {
@@ -45,22 +78,6 @@ export default function Details() {
         setFirstName('');
         setMiddleName('');
         setLastName('');
-        setChecked(false);
-    };
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (firstName.trim() === '' || middleName.trim() === '' || lastName.trim() === '') {
-            alert(`Please enter customer's complete name.`);
-            return;
-        }
-
-        // Proceed to payment modal
-        setOpenModal(true);
-        
-        console.log('Form submitted!');
-        console.log('First Name:', firstName);
-        console.log('Middle Name:', middleName);
-        console.log('Last Name:', lastName);
     };
     const handleBackdropClick = (event) => {
         // Prevent closing the modal if the backdrop is clicked
@@ -69,6 +86,15 @@ export default function Details() {
     const emptySelectedSeats = () => {
         // Empty selected seats by resetting the state variable to an empty array
         setSelectedSeats([]);
+    };
+    const handleIncrement = () => {
+        setSeniorCount(prevCount => prevCount + 1);
+    };
+
+    const handleDecrement = () => {
+        if (seniorCount > 0) {
+            setSeniorCount(prevCount => prevCount - 1);
+        }
     };
 
     return (
@@ -92,7 +118,6 @@ export default function Details() {
                             }}
                             noValidate
                             autoComplete="off"
-                            onSubmit={handleSubmit}
                         >
                             <TextField
                                 id="fname" 
@@ -101,10 +126,10 @@ export default function Details() {
                                 onChange={(e) => setFirstName(e.target.value)}
                                 size="small" 
                             />
-                            <TextField 
+                            <TextField
                                 id="mname" 
                                 label="Middle Name" 
-                                variant="outlined" 
+                                variant="outlined"
                                 value={middleName}
                                 onChange={(e) => setMiddleName(e.target.value)}
                                 size="small"
@@ -118,13 +143,22 @@ export default function Details() {
                                 size="small"
                             />
                         </Box>
-                        <div className='checkbox'>
-                            <Checkbox
-                                checked={checked}
-                                onChange={handleChange}
-                                inputProps={{ 'aria-label': 'controlled' }}
-                            /> <Typography mt={1}>Senior Citizen</Typography>
-                        </div>
+                        <Box display="flex" alignItems="center" mt={2} mb={3} width={190} height={20} justifyContent="space-between">
+                            <IconButton onClick={handleDecrement}>
+                                <RemoveIcon />
+                            </IconButton>
+                            <TextField
+                                value={seniorCount}
+                                variant="outlined"
+                                label="Senior Citizens"
+                                size="small"
+                                inputProps={{ readOnly: true, style: { textAlign: 'center', height: '15px' } }}
+                                sx={{ width: '200px', textAlign: 'center', '& .MuiInputBase-input': { height: '40px' } }}
+                            />
+                            <IconButton onClick={handleIncrement}>
+                                <AddIcon />
+                            </IconButton>
+                        </Box>
                     </div>
                     <div className='movie'>
                         <div className="text">
@@ -255,7 +289,7 @@ export default function Details() {
                         </Button>
                         <Button 
                             variant="contained" 
-                            onClick={handleSubmit}
+                            onClick={handleOpenModal}
                             sx={{
                                 width:'205px',
                                 borderRadius: '5px'
@@ -295,7 +329,7 @@ export default function Details() {
                                 </Button>
                                 <Button 
                                     variant='contained' 
-                                    onClick={handleConfirmPayment}
+                                    onClick={(e) => handleConfirmPayment(e)}
                                     sx={{
                                         width:'100px',
                                         borderRadius: '5px'
