@@ -14,7 +14,9 @@ function App() {
           <Route index element={<Home />} />
           <Route path="movies" element={<Movies />} />
           <Route path="details" element={<Details />} />
-          <Route path="reserve" element={<Reservation />} />
+
+          {/* i want the url to go here */}
+          <Route path="movies/:id" element={<Reservation />} />
         </Route>
       </Routes>
     </BrowserRouter>

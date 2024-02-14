@@ -1,110 +1,172 @@
-import React, { useState } from 'react';
+// Inside Reservation component
+import EventSeatIcon from '@mui/icons-material/EventSeat';
+import { Link, useHistory } from 'react-router-dom';
+
+
+import React, { useEffect, useState } from 'react';
 import '../../styles/MovieDetails.css';
+import { Box, Divider, Typography } from '@mui/material';
+import styled from '@emotion/styled';
+import Backup from './Backup';
+
+const MovieDetail = styled(Box)({
+    padding: '5px',
+    borderRadius: '10px',
+    padding: '25px'
+});
+
+const MovieImage = styled(Box)({
+    background: '#000',
+    height: '380px',
+    width: '350px'
+});
+
+const MoreDetails = styled(Typography)({
+    display: 'flex',
+    marginTop: '5px',
+});
+
+const LegendBox = styled(Box)({
+    height: '30px',
+    width: '30px',
+    padding: '5px',
+    marginRight: '10px',
+    marginBottom: '10px'
+});
+
+const Legend = styled(Box)({
+    display: 'flex',
+    marginTop: '5px'
+});
+
+const SummaryTypography = styled(Typography)({
+    marginBottom: '5px'
+});
 
 function Reservation() {
-    const rows = 8;
-    const seatsPerRow = 5;
+    // Get the dynamic part of the URL
+    const movieId = window.location.pathname.split('/')[2];    
 
-    // Initialize seat reservation state
-    const [reservedSeats, setReservedSeats] = useState([]);
+    const [movie, setMovie] = useState(null);
 
-    // Function to handle seat click
-    const handleSeatClick = (row, seat) => {
-        const seatId = `${row}${seat}`;
-        if (reservedSeats.includes(seatId)) {
-            // If seat is already reserved, unreserve it
-            setReservedSeats(reservedSeats.filter(reservedSeat => reservedSeat !== seatId));
-        } else {
-            // Otherwise, reserve the seat
-            setReservedSeats([...reservedSeats, seatId]);
-        }
+    const [selectedSeats, setSelectedSeats] = useState([]);
+
+    const handleSeatClick = (seatId) => {
+        setSelectedSeats([...selectedSeats, seatId]); // Push the clicked seatId into the selectedSeats array
     };
 
-    const totalSeats = rows * seatsPerRow;
-    const availableSeats = totalSeats - reservedSeats.length;
+    useEffect(() => {
+        const fetchMovies = async () => {
+            try {
+                const response = await fetch(`http://localhost:5555/api/movies/${movieId}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch movie');
+                }
+                const data = await response.json();
+                setMovie(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
-    const seatLayout = Array.from({ length: rows }, (_, rowIndex) =>
-        Array.from({ length: seatsPerRow }, (_, seatIndex) => ({
-            row: String.fromCharCode(65 + rowIndex), // Convert to letters A-H
-            seat: seatIndex + 1
-        }))
-    );
+        fetchMovies();
+    }, [movieId]); // Ensure useEffect runs when movieId changes
+
+    // Function to render the seats in a grid format
+    const renderSeats = () => {
+        if (!movie || !movie.m_seat) return null;
+        
+        const rows = [];
+        let row = [];
+        
+        movie.m_seat.forEach((seat, index) => {
+            row.push(
+                <Box
+                    key={seat._id}
+                    style={{ textAlign: 'center', cursor: seat.is_occupied ? 'not-allowed' : 'pointer' }}
+                    onClick={!seat.is_occupied ? () => handleSeatClick(seat._id) : null} // Call handleSeatClick on click if seat is not occupied
+                >
+                    <div style={{ color: seat.is_occupied ? '#f57c00' : (selectedSeats.includes(seat._id) ? '#0288d1' : '#388e3c'), fontWeight: selectedSeats.includes(seat._id) ? 'bold' : 'normal' }}>
+                        <EventSeatIcon style={{ fontSize: '40px', marginBottom: '-20px' }} />
+                    </div>
+                    <Typography variant='overline' style={{ color: !seat.is_occupied && selectedSeats.includes(seat._id) ? '#0288d1' : seat.is_occupied ? '#f57c00' : '#388e3c', fontWeight: !seat.is_occupied && selectedSeats.includes(seat._id) ? 'bold' : 'normal' }}>{seat.position}</Typography>
+                </Box>
+            );
+            
+            // Add the row to rows array when 5 seats are added or it's the last seat
+            if ((index + 1) % 5 === 0 || index === movie.m_seat.length - 1) {
+                rows.push(
+                    <div key={index} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        {row}
+                    </div>
+                );
+                row = [];
+            }
+        });
+
+        return rows;
+    };
+    useEffect(() => {
+        console.log(selectedSeats); 
+    }, [selectedSeats]);
 
     return (
-        <div className='main-wrapper'>
-            <div className='movieDetails-wrapper'>
-              <div className='movieDescription'>
-                <div className='moviePoster'> 
-                </div>
-                <div className='movieTitle'>
-                  <div className='title'>
-                    <h1>Movie Title</h1>
-                  </div>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error natus sequi dicta fuga sint beatae esse expedita at totam officiis, fugiat explicabo et eaque mollitia temporibus voluptatum, laboriosam nulla amet!</p>
-                </div>
-              </div>
-                <div className='movieDetails'>
-                  <h1>MOVIE DETAILS</h1>
-                  <p>MPA FILM RATING: </p>
-                  <p>CINEMA:</p>
-                  <p>DURATION: </p>
-                  <p>PRICE: </p>
-                  <p>SHOWING TIME: </p>
-                </div>
-                <h1 style={{fontSize:'1em'}}>OTHER DETAILS</h1>
-                <div className='otherDetails'>
-                  <div className='legend'>
-                  <h1>Legend</h1>
-                  <div className='legend-item'>
-                      <div className='legend-box available'></div>
-                      <p className='legend-text'>Available Seats</p>
-                  </div>
-                  <div className='legend-item'>
-                      <div className='legend-box unavailable'></div>
-                      <p className='legend-text'>Unavailable Seats</p>
-                  </div>
-                  </div>
-                  <div className='summary'>
-                    <h1>Summary</h1>
-                    <p>Total Seats: {totalSeats}</p>
-                    <p>Available Seats: {availableSeats}</p>
-                    <p>Reserved Seats: {reservedSeats.length}</p>
-                  </div>
-                </div>
-            </div>
-            <div className='seatLayout-wrapper'>
-                <div className='header'>
-                    <h1>Seat Reserved</h1>
-                    <h1>View Reservation</h1>
-                </div>
-                <div className='screen'>
-                    Front Screen
-                </div>
-                <div className="seat-layout">
-                    {seatLayout.map((row, rowIndex) => (
-                        <div key={rowIndex} className="row">
-                            {row.map(seat => (
-                                <div
-                                    key={`${seat.row}-${seat.seat}`}
-                                    className={`seat ${reservedSeats.includes(`${seat.row}${seat.seat}`) ? 'reserved' : ''}`}
-                                    onClick={() => handleSeatClick(seat.row, seat.seat)}
-                                >
-                                    {`${seat.row}${seat.seat}`}
-                                </div>
-                            ))}
-                        </div>
-                    ))}
-                </div>
-                <div className='entrance-exit-wrapper'>
-                    <p className='entrance-exit'>Entrance</p>
-                    <p className='entrance-exit'>Exit</p>
-                </div>
-                <div className='buttons'>
-                    <button className='button1'>CANCEL</button>
-                    <button className='button2'>RESERVE SEAT</button>
-                </div>
-            </div>
-        </div>
+        <Box>
+            <Box className="movie-cont" style={{ display: 'flex', justifyContent:'space-between' }}>
+                <MovieDetail className="movie-details" style={{ width: '55%' }}>
+                    <Box style={{ display: 'flex', justifyContent:'space-between'}}>
+                        <MovieImage className="movie-image" style={{ width: '50%' }}>
+                            Image here
+                        </MovieImage>
+                        <Box className="main-details" style={{ width: '45%' }}>
+                            <Typography variant='h5'><b>{movie?.m_title}</b></Typography>
+                            <Divider style={{background:'#0D99FF', marginTop: '10px' }}/>
+                            <Typography variant='body2' style={{marginTop:'10px', marginTop: '10px' }}>{movie?.m_desc}</Typography>
+                            <MoreDetails variant='subtitle1'><b>CINEMA: </b> {movie?.m_cinema}</MoreDetails>
+                            <MoreDetails variant='subtitle1'><b>MPA FILM RATING: </b> {movie?.m_cinema}</MoreDetails>
+                            <MoreDetails variant='subtitle1'><b>DATE: </b> {new Date(movie?.m_date).toLocaleDateString()}</MoreDetails>
+                            <MoreDetails variant='subtitle1'><b>TIME: </b> {new Date(movie?.m_starttime).toLocaleTimeString()} -  {new Date(movie?.m_endtime).toLocaleTimeString()}</MoreDetails>
+                            <MoreDetails variant='subtitle1'><b>DURATION: </b>  {movie?.m_hrs} hrs</MoreDetails>
+                            <MoreDetails variant='subtitle1'><b>TYPE: </b>  </MoreDetails>
+                            <MoreDetails variant='subtitle1'><b>PRICE: </b> {movie?.m_price} </MoreDetails>
+                        </Box>
+                    </Box>
+                    <Box>
+                        <Typography variant='h6' style={{ marginTop: '15px', marginBottom: '15px'}} ><b>OTHER DETAILS</b></Typography>
+                        <Box style={{ display: 'flex', justifyContent: 'space-between'}} >
+                            <Box className="summary">
+                                <SummaryTypography > Available Seats: 30</SummaryTypography>
+                                <SummaryTypography > Reserved Searts: 10</SummaryTypography>
+                                <Divider style={{background:'#0D99FF', marginTop: '10px' }}/>
+                                <SummaryTypography  style={{ marginTop: '10px'}}> Total Number of Seats: 40</SummaryTypography>
+                            </Box>
+                            <Box className="legend">
+                                <Legend >
+                                    <LegendBox style={{background:'#388e3c'}}></LegendBox>
+                                    <Typography>Available Seats</Typography>
+                                </Legend>
+                                <Legend >
+                                    <LegendBox style={{background:'#f57c00'}}></LegendBox>
+                                    <Typography>Unvailable Seats </Typography>
+                                </Legend>
+                            </Box>
+                        </Box>
+                    </Box>
+                </MovieDetail>
+
+                {/* this is the seat */}
+                <Box className="seat-details" style={{ width: '40%', background:'#fff', borderRadius: '10px', textAlign: 'center', padding: '25px' }}>
+                    <Typography></Typography>
+                    <Box style={{ width: '400px', margin: '0 auto' }}>
+                        {renderSeats()}
+                    </Box>
+                    <div>
+                    <Link to={{ pathname: '/details' }}>Proceed to Reservation</Link>
+                    </div>
+                </Box>
+
+            </Box>
+        </Box>
     );
 }
 

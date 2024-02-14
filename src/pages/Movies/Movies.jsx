@@ -67,13 +67,19 @@ export default function Movies() {
             id="outlined-size-small"
             size="small"
           />
-
+          {/* Description */}
           <TextFieldCont
             label="Description"
             id="outlined-size-small"
             size="small"
           />
-          
+
+          {/* Genre */}
+          <TextFieldCont
+            label="Genre"
+            id="outlined-size-small"
+            size="small"
+          />
           
           {/* MPA Film Rating */}
           <TextFieldCont
@@ -89,9 +95,7 @@ export default function Movies() {
             size="small"
           />
           <Box>
-
-
-
+            
           </Box>
 
           {/* Price */}
