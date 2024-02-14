@@ -100,6 +100,8 @@ const ListItemIconStyled = styled(ListItemIcon)(({ theme }) => ({
   color: theme.palette.primary.main,
 }));
 
+
+
 export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -115,27 +117,29 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: 'flex',  background:'#efefef', height: '100vh', width: '100vw' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{ backgroundColor: '#fff', color: '#000' }}>
+      <AppBar position="fixed" open={open} sx={{ backgroundColor: '#000', color: '#fff' }}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
+        <IconButton
+          color="primary"
+          aria-label="open drawer"
+          onClick={handleDrawerOpen}
+          edge="start"
+          sx={{
+            marginRight: 5,
+            ...(open && { display: 'none' }),
+          }}
+        >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          {/* <Typography variant="h6" noWrap component="div">
             Movie Reservation System
-          </Typography>
+          </Typography> */}
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open} 
-        style={{background: '#000'}}
+      <Drawer
+        variant="permanent"
+        open={open}
+        PaperProps={{ style: { backgroundColor: '#212121' } }}
       >
         <DrawerHeader >
           <IconButton onClick={handleDrawerClose} >
@@ -171,8 +175,8 @@ export default function MiniDrawer() {
           {/* go to reservation */}
           <ListItem key='Reserve' disablePadding>
             <ListItemButton component={Link} to="/reserve"> {/* Use component prop for custom link */}
-                <ListItemIcon><WeekendIcon/></ListItemIcon>
-                <ListItemText primary='Reserve' />
+                <ListItemIconStyled><WeekendIcon/></ListItemIconStyled>
+                <ListItemTextStyled primary='Reserve' />
             </ListItemButton>
           </ListItem>
 
