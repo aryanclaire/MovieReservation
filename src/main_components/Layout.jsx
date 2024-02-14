@@ -20,7 +20,8 @@ import { Link, Outlet } from 'react-router-dom';
 
 import HomeIcon from '@mui/icons-material/Home';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
-import DescriptionIcon from '@mui/icons-material/Description'
+import DescriptionIcon from '@mui/icons-material/Description';
+import WeekendIcon from '@mui/icons-material/Weekend';
 
 const drawerWidth = 240;
 
@@ -78,6 +79,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
+    background: '#000',
+
     ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
@@ -88,6 +91,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
   }),
 );
+
+const ListItemTextStyled = styled(ListItemText)(({ theme }) => ({
+  color: theme.palette.primary.main,
+}));
+
+const ListItemIconStyled = styled(ListItemIcon)(({ theme }) => ({
+  color: theme.palette.primary.main,
+}));
 
 export default function MiniDrawer() {
   const theme = useTheme();
@@ -102,9 +113,9 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex',  background:'#efefef', height: '100vh', width: '100vw' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{ backgroundColor: '#678983', color: 'white' }}>
+      <AppBar position="fixed" open={open} sx={{ backgroundColor: '#fff', color: '#000' }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -123,9 +134,11 @@ export default function MiniDrawer() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+      <Drawer variant="permanent" open={open} 
+        style={{background: '#000'}}
+      >
+        <DrawerHeader >
+          <IconButton onClick={handleDrawerClose} >
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
@@ -134,32 +147,36 @@ export default function MiniDrawer() {
           {/* go to home */}
           <ListItem key='Home' disablePadding>
             <ListItemButton component={Link} to="/"> {/* Use component prop for custom link */}
-                <ListItemIcon><HomeIcon/></ListItemIcon>
-                <ListItemText primary='Home' />
+                <ListItemIconStyled><HomeIcon/></ListItemIconStyled>
+                <ListItemTextStyled primary='Home' />
             </ListItemButton>
           </ListItem>
 
           {/* go to movies */}
           <ListItem key='Movies' disablePadding>
             <ListItemButton component={Link} to="/movies"> {/* Use component prop for custom link */}
-                <ListItemIcon><LiveTvIcon/></ListItemIcon>
-                <ListItemText primary='Movies' />
+                <ListItemIconStyled><LiveTvIcon/></ListItemIconStyled>
+                <ListItemTextStyled primary='Movies' />
             </ListItemButton>
           </ListItem>
         
-          {/* go to movies */}
+          {/* go to details */}
           <ListItem key='Details' disablePadding>
             <ListItemButton component={Link} to="/details"> {/* Use component prop for custom link */}
-                <ListItemIcon><DescriptionIcon/></ListItemIcon>
-                <ListItemText primary='Details' />
+                <ListItemIconStyled><DescriptionIcon/></ListItemIconStyled>
+                <ListItemTextStyled primary='Details' />
+            </ListItemButton>
+          </ListItem>
+
+          {/* go to reservation */}
+          <ListItem key='Reserve' disablePadding>
+            <ListItemButton component={Link} to="/reserve"> {/* Use component prop for custom link */}
+                <ListItemIcon><WeekendIcon/></ListItemIcon>
+                <ListItemText primary='Reserve' />
             </ListItemButton>
           </ListItem>
 
         </List>
-
-        
-        
-     
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />

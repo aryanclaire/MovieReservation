@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import './Details.css'
-import { Box, Button, Checkbox, Modal, Stack, TextField, Backdrop } from '@mui/material'
-import confirmPaymentIcon from '../../assets/secure-payment.png'
-import successPaymentIcon from '../../assets/verified.png'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom'
+import '../../styles/Details.css';
+import { Backdrop, Box, Button, Checkbox, Grid, Modal, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
+import confirmPaymentIcon from '../../assets/secure-payment.png';
+import successPaymentIcon from '../../assets/verified.png';
 
 
 export default function Details() {
@@ -11,6 +12,7 @@ export default function Details() {
     const [firstName, setFirstName] = useState('');
     const [middleName, setMiddleName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [selectedSeats, setSelectedSeats] = useState([]);
     const [paymentConfirmed, setPaymentConfirmed] = useState(false);
 
     const handleChange = (event) => {
@@ -28,16 +30,27 @@ export default function Details() {
         setFirstName('');
         setMiddleName('');
         setLastName('');
+        setSelectedSeats([]);
         setChecked(event.target.checked);
         setPaymentConfirmed(false);
     };
-    const handleUpdateSeats = () => {
-        // Navigate to the new screen when "Update Seats" button is clicked
+    const handleUpdateSeats = (seatId) => {
+        setSelectedSeats([...selectedSeats, seatId]); // Add the selected seat to the array
+    };
+    const handleCancel = () => {
+        // Empty selected seats
+        emptySelectedSeats();
+
+        // Clear form fields
+        setFirstName('');
+        setMiddleName('');
+        setLastName('');
+        setChecked(false);
     };
     const handleSubmit = (event) => {
         event.preventDefault();
         if (firstName.trim() === '' || middleName.trim() === '' || lastName.trim() === '') {
-            alert('Please provide your complete name!');
+            alert(`Please enter customer's complete name.`);
             return;
         }
 
@@ -53,107 +66,139 @@ export default function Details() {
         // Prevent closing the modal if the backdrop is clicked
         event.stopPropagation();
     };
+    const emptySelectedSeats = () => {
+        // Empty selected seats by resetting the state variable to an empty array
+        setSelectedSeats([]);
+    };
+
     return (
         <div className='container1'>
             <div className='container2'>
                 <div className='reservation'>
-                    <div className='reservation2'>
-                        <div>
-                            <h3>Reservation Description</h3>
-                        </div>
-                        <div className='smallText'>
-                            <p>ID: 001-9203-937</p>
-                        </div>
+                    <div className='title'>
+                        <Typography  variant="h6" ml={1} fontWeight='bold'>RESERVATION DESCRIPTION</Typography>
+                        <Typography mt={1} mr={1}>ID: 001-9203-937</Typography>
                     </div>
-                        <p><b>Customer Description</b></p>
-                        <div className='textfield'>
-                            <Box
-                                component="form"
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    '& > :not(style)': { m: 1, width: '27ch' },
-                                }}
-                                noValidate
-                                autoComplete="off"
-                                onSubmit={handleSubmit}
-                            >
-                                <TextField 
-                                    id="fname" 
-                                    label="First Name" 
-                                    value={firstName}
-                                    onChange={(e) => setFirstName(e.target.value)} 
-                                />
-                                <TextField 
-                                    id="mname" 
-                                    label="Middle Name" 
-                                    variant="outlined" 
-                                    value={middleName}
-                                    onChange={(e) => setMiddleName(e.target.value)}
-                                />
-                                <TextField 
-                                    id="lname" 
-                                    label="Last Name" 
-                                    variant="outlined" 
-                                    value={lastName}
-                                    onChange={(e) => setLastName(e.target.value)}
-                                />
-                            </Box>
+                    <div className='customer'>
+                        <div className="text">
+                            <Typography  variant="h7">CUSTOMER DESCRIPTION</Typography>
                         </div>
-                        
+                        <Box
+                            component="form"
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                '& > :not(style)': { m: 1, width: '23ch'},
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            onSubmit={handleSubmit}
+                        >
+                            <TextField
+                                id="fname" 
+                                label="First Name" 
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                                size="small" 
+                            />
+                            <TextField 
+                                id="mname" 
+                                label="Middle Name" 
+                                variant="outlined" 
+                                value={middleName}
+                                onChange={(e) => setMiddleName(e.target.value)}
+                                size="small"
+                            />
+                            <TextField 
+                                id="lname" 
+                                label="Last Name" 
+                                variant="outlined" 
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                                size="small"
+                            />
+                        </Box>
                         <div className='checkbox'>
                             <Checkbox
                                 checked={checked}
                                 onChange={handleChange}
                                 inputProps={{ 'aria-label': 'controlled' }}
-                            /> <p>Senior Citizen</p>
+                            /> <Typography mt={1}>Senior Citizen</Typography>
                         </div>
-                        <p><b>Movie Description</b></p>
-                    <div className='movieDescription'>
-                        <p>Movie Title: Rewind</p>
-                        <p></p>
-                        <p>Type: REGULAR</p>
-                        <p>Date: FEB 02, 2024</p>
-                        <p>Start Time: 12:00 pm</p>
-                        <p>End Time: 14:30 pm</p>
-                        <p>Duration: 2 hr 30 min</p>
-                        <p>Price: 350</p>
-                        <p></p>
-                        <p>MPA FILM RATING: Rated G</p>
+                    </div>
+                    <div className='movie'>
+                        <div className="text">
+                                <Typography  variant="h7">MOVIE DESCRIPTION</Typography>
+                        </div>
+                        <Grid container spacing={2} ml={2} mt={0.02}>
+                            <Grid item xs={4}>
+                                <Typography sx={{ fontStyle: 'italic', fontSize: '0.9rem', textAlign: 'left' }}>Movie Title: REWIND</Typography>
+                            </Grid>
+                            <Grid item xs={4}></Grid>
+                            <Grid item xs={4}>
+                                <Typography sx={{ fontStyle: 'italic', fontSize: '0.9rem', textAlign: 'left' }}>Type: REGULAR</Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Typography sx={{ fontStyle: 'italic', fontSize: '0.9rem', textAlign: 'left' }}>Date: FEB 02, 2024</Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Typography sx={{ fontStyle: 'italic', fontSize: '0.9rem', textAlign: 'left' }}>Start Time: 12:00 pm</Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Typography sx={{ fontStyle: 'italic', fontSize: '0.9rem', textAlign: 'left' }}>End Time: 14:30 pm</Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Typography sx={{ fontStyle: 'italic', fontSize: '0.9rem', textAlign: 'left' }}>Duration: 2 hr 30 min</Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Typography sx={{ fontStyle: 'italic', fontSize: '0.9rem', textAlign: 'left' }}>Price: ₱ 350.00</Typography>
+                            </Grid>
+                            <Grid item xs={4}></Grid>
+                            <Grid item xs={4}>
+                                <Typography sx={{ fontStyle: 'italic', fontSize: '0.9rem', textAlign: 'left' }}>MPA FILM RATING: Rated G</Typography>
+                            </Grid>
+                        </Grid>
                     </div>
                 </div>
-                
-                <div className="seat-cont">
-                    <div className='seat'>
-                        <div>
-                            <h3>Seat Reserved</h3>
-                        </div>
-                        <div className='smallText'>
-                            <p>Total No. of Seats Reserved: 4</p>
-                        </div>
-                        <h4> SEAT ID</h4>
-                        <h4 className='secondColumn'>PRICE</h4>
-                        <p>C1</p>
-                        <p className='secondColumn'>350.00</p>
-                        <p>C2</p>
-                        <p className='secondColumn'>350.00</p>
-                        <p>C3</p>
-                        <p className='secondColumn'>350.00</p>
-                        <p>C4</p>
-                        <p className='secondColumn'>350.00</p>
-                        <p></p>
-                        <h4 className='total'>TOTAL: 1,400.00</h4>
+
+                <div className='seat-cont'>
+                    <div className='title'>
+                        <Typography  variant="h6" ml={1} fontWeight='bold'>SEAT RESERVED</Typography>
+                        <Typography mt={1} mr={1}>Total Number of Seats Reserved: 4</Typography>
+                    </div>
+                    <div className='table'>
+                        <TableContainer component={Paper} sx={{ width: '95%' }}>
+                            <Table size="small" aria-label="a dense table">
+                                <TableHead sx={{ backgroundColor: '#BBE2EC' }}>
+                                    <TableRow>
+                                        <TableCell align='center'><Typography fontWeight='bold' fontSize='small'>SEAT</Typography></TableCell>
+                                        <TableCell align="center"><Typography fontWeight='bold' fontSize='small'>PRICE</Typography></TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody sx={{ backgroundColor: '#f0f0f0' }}>
+                                    <TableRow>
+                                        <TableCell align='center'>C1</TableCell>
+                                        <TableCell align="center">₱ 350.00</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell align='center'>H1</TableCell>
+                                        <TableCell align="center">₱ 350.00</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </div>
                     <div className="seat-btn">
-                        <Button 
+                        <Button
+                            as={Link}
+                            to="/reserve"
                             variant="contained" 
                             onClick={handleUpdateSeats}
                             sx={{
-                                width:'200px',
-                                marginTop: '25px',
-                                marginBottom: '15px',
-                                borderRadius: '10px',
-                                marginLeft: '460px'
+                                width:'150px',
+                                top:'160px',
+                                left:'230px',
+                                textDecoration:'none'
                             }}
                         >
                             Update Seats
@@ -162,46 +207,62 @@ export default function Details() {
                 </div>
 
                 <div className='payment'>
-                    <header>
-                        <h3>Payment Breakdown</h3>
-                    </header>
-                    <div className='payment2'>
-                        <p><b>Type:</b></p>
-                        <p className='secondColumn'>350 (SENIOR CITIZEN)</p>
-                        <p><b>Number of Seats:</b></p>
-                        <p className='secondColumn'>4</p>
-                        <p><b>Discount:</b></p>
-                        <p className='secondColumn'>20%</p>
-                        <p></p>
-                        <h4 className='total'>AMOUNT TO PAY: 1,120.00</h4>
+                    <div className='title'>
+                        <Typography  variant="h6" ml={1} fontWeight='bold'>PAYMENT BREAKDOWN</Typography>
                     </div>
-                    <Stack spacing={10} direction="row" marginTop={5} marginLeft={3}>
+                    <div className='table'>
+                        <TableContainer component={Paper} sx={{ width: '95%' }}>
+                            <Table size="small" aria-label="a dense table">
+                                <TableBody sx={{ backgroundColor: '#f0f0f0' }}>
+                                    <TableRow>
+                                        <TableCell align='left'><Typography fontWeight='bold' fontSize='small'>Type: </Typography></TableCell>
+                                        <TableCell align="right">350 (REGULAR)</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell align='left'><Typography fontWeight='bold' fontSize='small'>Number of Seats: </Typography></TableCell>
+                                        <TableCell align="right">4</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell align='left'><Typography fontWeight='bold' fontSize='small'>Discount: </Typography></TableCell>
+                                        <TableCell align="right">20%</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell></TableCell>
+                                        <TableCell align='right'><Typography fontWeight='bold' fontSize='small'>AMOUNT TO PAY: ₱ 1,120.00</Typography></TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </div>
+
+                    <Stack spacing={10} direction="row" marginTop={2} marginBottom={1.5} justifyContent='center'>
                         <Button 
+                            as={Link}
+                            to="/movies"
                             variant="contained" 
-                            onClick={handleCloseModal} 
-                            // className='cancelPayBtn' 
+                            onClick={handleCancel}
                             sx={{
-                                width:'250px',
+                                width:'205px',
                                 backgroundColor: 'gray',
                                 '&:hover': {
                                     backgroundColor: 'gray',
                                 },
-                                borderRadius: '10px'
+                                borderRadius: '5px',
+                                textDecoration:'none'
                             }}
                         >
                             Cancel
                         </Button>
                         <Button 
                             variant="contained" 
-                            onClick={handleSubmit} 
-                            // className='paymentBtn'
+                            onClick={handleSubmit}
                             sx={{
-                                width:'250px',
-                                borderRadius: '10px'
+                                width:'205px',
+                                borderRadius: '5px'
                             }}
                         >
                             Proceed to Payment
-                        </Button>
+                        </Button>   
                     </Stack>
 
                     {/* Payment modal */}
@@ -213,18 +274,17 @@ export default function Details() {
                     >
                         <Box className='modalContent'>
                             <img src={confirmPaymentIcon} alt="Confirm Payment Icon" className='payIcon'/>
-                            <h2>Confirm Payment</h2>
-                            <p>Name:            {firstName} {middleName} {lastName}</p>
-                            <p>Reservation ID:  001-9203-937</p>
-                            <p>Amount to Pay:   ₱ 1,120</p>
+                            <Typography variant='h5' sx={{ fontWeight: 'bold', mt: 2, mb: 2, ml: 12 }}>Confirm Payment</Typography>
+                            <Typography>Name:   {firstName} {middleName} {lastName}</Typography>
+                            <Typography>Reservation ID:  001-9203-937</Typography>
+                            <Typography>Amount to Pay:   ₱ 1,120</Typography>
                             <Stack spacing={5} direction="row" marginTop={5} marginLeft={10} marginBottom={5}>
                                 <Button 
                                     variant='contained' 
                                     onClick={handleCloseModal} 
-                                    // className='cancelBtn'
                                     sx={{
                                         width:'100px',
-                                        borderRadius: '10px',
+                                        borderRadius: '5px',
                                         backgroundColor: 'gray',
                                         '&:hover': {
                                             backgroundColor: 'gray',
@@ -235,18 +295,17 @@ export default function Details() {
                                 </Button>
                                 <Button 
                                     variant='contained' 
-                                    onClick={handleConfirmPayment} 
-                                    // className='confirmBtn'
+                                    onClick={handleConfirmPayment}
                                     sx={{
                                         width:'100px',
-                                        borderRadius: '10px'
+                                        borderRadius: '5px'
                                     }}
                                 >
                                     Confirm
                                 </Button>
                             </Stack>
                         </Box>
-                    </Modal>  
+                    </Modal>
 
                     <Modal 
                         open={paymentConfirmed} 
@@ -258,9 +317,9 @@ export default function Details() {
                             <div className='success'>
                                 <img src={successPaymentIcon} alt="Success Payment Icon" className='successIcon'/>
                             </div>
-                            <h2>Payment Successful</h2>
-                            <p className='processed'>Your payment has been successfully processed.</p>
-                            <p className='addInfo'>Please check your email for your reservation details.</p>
+                            <Typography variant='h5' sx={{ fontWeight: 'bold', mt: 2, mb:2 }}>Payment Successful</Typography>
+                            <Typography>Your payment has been successfully processed.</Typography>
+                            <Typography>Please check your email for your reservation details.</Typography>
                             <Button 
                                 variant='contained'
                                 onClick={handlePaymentSuccessModalClose} 
@@ -269,15 +328,18 @@ export default function Details() {
                                     width:'100px',
                                     marginTop: '15px',
                                     marginBottom: '15px',
-                                    borderRadius: '10px'
+                                    borderRadius: '5px'
                                 }}
                             >
                                 Done
                             </Button>
                         </Box>
-                    </Modal>        
+                    </Modal>    
+                </div>
+                <div>
+                
                 </div>
             </div>
         </div>
-        )
+    )
 }
