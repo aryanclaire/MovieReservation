@@ -84,9 +84,9 @@ function Reservation() {
                 <Box
                     key={seat._id}
                     style={{ textAlign: 'center', cursor: seat.is_occupied ? 'not-allowed' : 'pointer' }}
-                    onClick={!seat.is_occupied ? () => handleSeatClick(seat._id) : null} // Call handleSeatClick on click if seat is not occupied
+                    onClick={!seat.is_occupied ? () => handleSeatClick(seat.position) : null} // Call handleSeatClick on click if seat is not occupied
                 >
-                    <div style={{ color: seat.is_occupied ? '#f57c00' : (selectedSeats.includes(seat._id) ? '#0288d1' : '#388e3c'), fontWeight: selectedSeats.includes(seat._id) ? 'bold' : 'normal' }}>
+                    <div style={{ color: seat.is_occupied ? '#f57c00' : (selectedSeats.includes(seat.position) ? '#0288d1' : '#388e3c'), fontWeight: selectedSeats.includes(seat._id) ? 'bold' : 'normal' }}>
                         <EventSeatIcon style={{ fontSize: '40px', marginBottom: '-20px' }} />
                     </div>
                     <Typography variant='overline' style={{ color: !seat.is_occupied && selectedSeats.includes(seat._id) ? '#0288d1' : seat.is_occupied ? '#f57c00' : '#388e3c', fontWeight: !seat.is_occupied && selectedSeats.includes(seat._id) ? 'bold' : 'normal' }}>{seat.position}</Typography>
@@ -167,12 +167,21 @@ function Reservation() {
                         {renderSeats()}
                     </Box>
                     <Box>
-                        <Button variant="outlined"  component={Link} to="/details" style={{ width: '100%', marginTop: '30px' }}>
+                        <Button 
+                            variant="outlined"  
+                            component={Link} 
+                            //to={`/details/${movieId}`} 
+                            // to={{
+                            //     pathname: `/details/${movieId}`,    
+                            //     state: { selectedSeats: selectedSeats } // Pass selected seats as state
+                            // }}
+                            to={`/details/${movieId}${selectedSeats.length > 0 ? `/${JSON.stringify(selectedSeats)}` : ''}`}
+                            style={{ width: '100%', marginTop: '30px' }}
+                        >
                             Proceed to Reservation
                         </Button>
                     </Box>
                 </Box>
-
             </Box>
         </Box>
     );
