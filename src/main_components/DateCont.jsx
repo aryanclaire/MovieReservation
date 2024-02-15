@@ -1,13 +1,25 @@
-import * as React from 'react';
-import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import React, { useState } from 'react';
+import { TextField } from '@mui/material';
 
-export default function DateCont() {
+const DateCont = () => {
+  const [date, setDate] = useState('');
+
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+  };
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker
-        label="Search Date"
-      />
-    </LocalizationProvider>
+    <TextField
+      id="date"
+      label="Select Date"
+      type="date"
+      value={date}
+      onChange={handleDateChange}
+      InputLabelProps={{
+        shrink: true,
+      }}
+    />
   );
-}
+};
+
+export default DateCont;

@@ -22,6 +22,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 import DescriptionIcon from '@mui/icons-material/Description';
 import WeekendIcon from '@mui/icons-material/Weekend';
+import { Button } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -131,9 +132,13 @@ export default function MiniDrawer() {
         >
             <MenuIcon />
           </IconButton>
-          {/* <Typography variant="h6" noWrap component="div">
-            Movie Reservation System
-          </Typography> */}
+          
+              <Typography variant="h6" noWrap component="div" >
+                Movie Reservation System
+              </Typography>
+         
+             
+              
         </Toolbar>
       </AppBar>
       <Drawer
