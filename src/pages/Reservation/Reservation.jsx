@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import React, { useEffect, useState } from 'react';
 import '../../styles/MovieDetails.css';
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import Backup from './Backup';
 
@@ -132,15 +132,16 @@ function Reservation() {
                         </Box>
                     </Box>
                     <Box>
-                        <Typography variant='h6' style={{ marginTop: '15px', marginBottom: '15px'}} ><b>OTHER DETAILS</b></Typography>
                         <Box style={{ display: 'flex', justifyContent: 'space-between'}} >
                             <Box className="summary">
+                                <Typography variant='h6' style={{ marginTop: '15px', marginBottom: '15px'}} ><b>OTHER DETAILS</b></Typography>
                                 <SummaryTypography > Available Seats: 30</SummaryTypography>
                                 <SummaryTypography > Reserved Searts: 10</SummaryTypography>
                                 <Divider style={{background:'#0D99FF', marginTop: '10px' }}/>
                                 <SummaryTypography  style={{ marginTop: '10px'}}> Total Number of Seats: 40</SummaryTypography>
                             </Box>
                             <Box className="legend">
+                                <Typography variant='h6' style={{ marginTop: '15px', marginBottom: '15px'}} ><b>OTHER DETAILS</b></Typography>
                                 <Legend >
                                     <LegendBox style={{background:'#388e3c'}}></LegendBox>
                                     <Typography>Available Seats</Typography>
@@ -149,6 +150,11 @@ function Reservation() {
                                     <LegendBox style={{background:'#f57c00'}}></LegendBox>
                                     <Typography>Unvailable Seats </Typography>
                                 </Legend>
+                                <Legend >
+                                    <LegendBox style={{background:'#0288d1'}}></LegendBox>
+                                    <Typography>Selected Seats </Typography>
+                                </Legend>
+                                
                             </Box>
                         </Box>
                     </Box>
@@ -160,9 +166,11 @@ function Reservation() {
                     <Box style={{ width: '400px', margin: '0 auto' }}>
                         {renderSeats()}
                     </Box>
-                    <div>
-                    <Link to={{ pathname: '/details' }}>Proceed to Reservation</Link>
-                    </div>
+                    <Box>
+                        <Button variant="outlined"  component={Link} to="/details" style={{ width: '100%', marginTop: '30px' }}>
+                            Proceed to Reservation
+                        </Button>
+                    </Box>
                 </Box>
 
             </Box>
