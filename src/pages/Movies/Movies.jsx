@@ -248,7 +248,7 @@ export default function BackupMovie() {
               name="type"
             >
               <FormControlLabel value="regular" control={<Radio />} label="Regular" />
-              <FormControlLabel value="premier" control={<Radio />} label="Premiere" />
+              <FormControlLabel value="premiere" control={<Radio />} label="Premiere" />
             </RadioGroup>
           </FormControlRadio>
 

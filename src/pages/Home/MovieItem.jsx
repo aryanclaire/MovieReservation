@@ -32,7 +32,7 @@ const MovieItem = ({ movie }) => {
       <Divider />
       <Box className="movie" style={{ display: 'flex', marginBottom: '20px' }}>
       <Box className="movie-image" style={{ width: '20%' }}>
-        <img src='/avatar.jpg' alt="{movie.m_title}" style={{ width: '150px', height: '200px' }} />
+      <img src={`/${movie.m_poster}`}  alt="{movie.m_title}" style={{ width: '150px', height: '200px' }} />
     </Box>
 
         <Box className="movie-detail" style={{ width: '80%' }}>

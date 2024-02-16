@@ -162,26 +162,26 @@ export default function MiniDrawer() {
           </ListItem>
 
           {/* go to movies */}
-          <ListItem key='Movies' disablePadding>
-            <ListItemButton component={Link} to="/movies"> {/* Use component prop for custom link */}
+          {/* <ListItem key='Movies' disablePadding>
+            <ListItemButton component={Link} to="/movies"> 
                 <ListItemIconStyled><LiveTvIcon/></ListItemIconStyled>
                 <ListItemTextStyled primary='Movies' />
             </ListItemButton>
-          </ListItem>
+          </ListItem> */}
         
           {/* go to details */}
-          <ListItem key='Details' disablePadding>
-            <ListItemButton component={Link} to="/details"> {/* Use component prop for custom link */}
+          {/* <ListItem key='Details' disablePadding>
+            <ListItemButton component={Link} to="/details"> 
                 <ListItemIconStyled><DescriptionIcon/></ListItemIconStyled>
                 <ListItemTextStyled primary='Details' />
             </ListItemButton>
-          </ListItem>
+          </ListItem> */}
 
           {/* go to reservation */}
           <ListItem key='Reserve' disablePadding>
             <ListItemButton component={Link} to="/reserve"> {/* Use component prop for custom link */}
                 <ListItemIconStyled><WeekendIcon/></ListItemIconStyled>
-                <ListItemTextStyled primary='Reserve' />
+                <ListItemTextStyled primary='Reservation List' />
             </ListItemButton>
           </ListItem>
 

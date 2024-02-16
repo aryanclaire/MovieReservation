@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Box, TableCell, TableContainer, Table, TableHead, TableRow, Paper, TableBody, Button, Dialog, DialogTitle, DialogContent, DialogActions, Typography } from '@mui/material';
+import { Box, TableCell, TableContainer, Table, TableHead, TableRow, Paper, TableBody, Button, Dialog, DialogTitle, DialogContent, DialogActions, Typography, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 export default function Backup() {
     const [reserve, setReserve] = useState([]);
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedReservationId, setSelectedReservationId] = useState(null);
+    const [reservationIdFilter, setReservationIdFilter] = useState('');
+    const [isCancelledFilter, setIsCancelledFilter] = useState('active');
 
     useEffect(() => {
         const fetchReserve = async () => {
@@ -28,65 +30,81 @@ export default function Backup() {
         setOpenDialog(true);
     };
 
-    const handleCancelConfirm = () => {
-
-      // Perform the actual cancellation action
-        const updatedReserve = reserve.map(item => {
+    const handleCancelConfirm = async () => {
+        // Perform the cancellation action here
+        const updatedReserve = reserve.map(async (item) => {
             if (item.res_id === selectedReservationId) {
-                // return { ...item, isCancel: true };
-                console.log(item.m_id);
-                console.log(item.seat);
-                console.log(item.isCancel);
-                
-                const seats = item.seat;
-
-
-
-                // **********************************************
-                const formData = {
-                  is_occupied: false
-                  };
-                  try {
-                    seats.map(async (id, index) => {
-                          const response = await fetch(`http://localhost:5555/api/movies/${item.m_id}/${id}`, {
-                              method: 'PATCH',
-                              headers: {
-                                  'Content-Type': 'application/json'
-                              },
-                              body: JSON.stringify(formData)
-                          });
-                  
-                          if (!response.ok) {
-                              throw new Error('Failed to submit data');
-                          }
-                      });
-                  } catch (error) {
-                      console.error('Error submitting data:', error);
-                  }
-
-
-                // **********************************************
-
-
+                const dataRes = { isCancel: true }
+                const response = await fetch(`http://localhost:5555/api/details/${item._id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dataRes)
+                });
+                try {
+                    const formData = { is_occupied: false };
+                    for (const seat of item.seat) {
+                        const response = await fetch(`http://localhost:5555/api/movies/cancel/${item.m_id}/${seat}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formData)
+                        });
+                        if (!response.ok) {
+                            throw new Error('Failed to submit data');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error submitting data:', error);
+                }
             }
             return item;
         });
-      
+        await Promise.all(updatedReserve);
+        setOpenDialog(false);
     };
-        
-        // setReserve(updatedReserve);
-        // setOpenDialog(false);
-
-    
 
     const handleCancelReject = () => {
         setOpenDialog(false);
     };
 
+    const filteredReserve = reserve.filter(item => {
+        return (
+            item.res_id.includes(reservationIdFilter) &&
+            (isCancelledFilter === 'all' || (isCancelledFilter === 'active' && !item.isCancel) || (isCancelledFilter === 'cancelled' && item.isCancel))
+        );
+    });
+
     return (
         <div className='reserv'>
-            <h2>List of Reservations</h2> 
             <Paper>
+                <Box style={{display:"flex", width:"100%", justifyContent:"space-between"}}>
+                  <Box style={{padding: "20px 10px" }}>
+                    <TextField
+                    style={{width: "100%"}}
+                        label="Reservation ID"
+                        value={reservationIdFilter}
+                        onChange={(e) => setReservationIdFilter(e.target.value)}
+                        
+                    />
+                  </Box>
+                  <Box style={{width:"20%", padding: "20px 10px"}}>
+                    <FormControl style={{width:"100%"}}>
+                        <InputLabel>Status</InputLabel>
+                        <Select
+                          value={isCancelledFilter}
+                          onChange={(e) => setIsCancelledFilter(e.target.value)}
+                        >
+                            <MenuItem value="active">Active</MenuItem>
+                            <MenuItem value="cancelled">Cancelled</MenuItem>
+                            <MenuItem value="all">All</MenuItem>
+                        </Select>
+                      </FormControl>
+                  </Box>
+                    
+                </Box>
                 <TableContainer>
                     <Table>
                         <TableHead>
@@ -96,19 +114,19 @@ export default function Backup() {
                                 <TableCell>Senior</TableCell>
                                 <TableCell>Seats</TableCell>
                                 <TableCell>Amount Paid</TableCell>
-                                <TableCell>Reservation ID</TableCell>
                                 <TableCell>Cancelled</TableCell>
+                                <TableCell>Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {reserve.map((row) => (
+                            {filteredReserve.map((row) => (
                                 <TableRow key={row._id}>
                                     <TableCell>{row.res_id}</TableCell>
                                     <TableCell>{`${row.f_name} ${row.m_name} ${row.l_name}`}</TableCell>
                                     <TableCell>{row.senior}</TableCell>
                                     <TableCell>{row.seat.join(', ')}</TableCell>
                                     <TableCell>{row.amt_pay}</TableCell>
-                                    <TableCell>{row.m_id}</TableCell>
+                                    <TableCell>{row.isCancel ? 'Yes' : 'No'}</TableCell>
                                     <TableCell>
                                         {!row.isCancel ? 
                                             <Button 
@@ -119,7 +137,7 @@ export default function Backup() {
                                                 Cancel
                                             </Button>
                                             :
-                                            "Yes"
+                                            null
                                         }
                                     </TableCell>
                                 </TableRow>
