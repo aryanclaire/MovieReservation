@@ -110,18 +110,18 @@ export default function Details() {
         //setSelectedSeats([]);
         setPaymentConfirmed(false);
     };
-    const handleUpdateSeats = (seatId) => {
-        // setSelectedSeats([...selectedSeats, seatId]); // Add the selected seat to the array
-    };
-    const handleCancel = () => {
-        // Empty selected seats
+    const handleUpdateSeats = () => {
         emptySelectedSeats();
-
-        // Clear form fields
-        setFirstName('');
-        setMiddleName('');
-        setLastName('');
     };
+    // const handleCancel = () => {
+    //     // Empty selected seats
+    //     emptySelectedSeats();
+
+    //     // Clear form fields
+    //     setFirstName('');
+    //     setMiddleName('');
+    //     setLastName('');
+    // };
     const handleBackdropClick = (event) => {
         // Prevent closing the modal if the backdrop is clicked
         event.stopPropagation();
@@ -440,8 +440,8 @@ export default function Details() {
                         </TableContainer>
                     </div>
 
-                    <Stack spacing={10} direction="row" marginTop={2} marginBottom={1.5} justifyContent='center'>
-                        <Button 
+                    <Stack spacing={10} direction="row" marginTop={2} marginBottom={1.5} marginLeft={52.5}>
+                        {/* <Button 
                             as={Link}
                             to="/"
                             variant="contained" 
@@ -457,7 +457,7 @@ export default function Details() {
                             }}
                         >
                             Cancel
-                        </Button>
+                        </Button> */}
                         <Button 
                             variant="contained" 
                             onClick={handleOpenModal}
