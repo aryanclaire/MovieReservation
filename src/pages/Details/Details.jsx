@@ -128,7 +128,7 @@ export default function Details() {
     };
     const emptySelectedSeats = () => {
         // Empty selected seats by resetting the state variable to an empty array
-        //setSelectedSeats([]);
+        decodedSelectedSeats = []
     };
     const handleIncrement = () => {
         if (seniorCount < decodedSelectedSeats.length)
@@ -258,8 +258,8 @@ export default function Details() {
     
     // Call the function to get the current date and time
     const currentDateTime = getCurrentDateTime();
-    
     // console.log("Current Date and Time:", currentDateTime);
+    const MAX_ROWS_BEFORE_SCROLL = 3; // Maximum number of rows before enabling scroll
 
     return (
         <div className='container1'>
@@ -371,7 +371,7 @@ export default function Details() {
                         <Typography mt={1} mr={2}>Total Number of Seats Reserved: {decodedSelectedSeats.length}</Typography>
                     </div>
                     <div className='table'>
-                        <TableContainer component={Paper} sx={{ width: '95%' }}>
+                        <TableContainer component={Paper} sx={{ width: '95%', maxHeight: MAX_ROWS_BEFORE_SCROLL * 40 + 20, overflowY: 'auto'  }}>
                             <Table size="small" aria-label="a dense table">
                                 <TableHead sx={{ backgroundColor: '#BBE2EC' }}>
                                     <TableRow>
@@ -443,7 +443,7 @@ export default function Details() {
                     <Stack spacing={10} direction="row" marginTop={2} marginBottom={1.5} justifyContent='center'>
                         <Button 
                             as={Link}
-                            to="/movies"
+                            to="/"
                             variant="contained" 
                             onClick={handleCancel}
                             sx={{
