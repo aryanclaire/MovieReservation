@@ -227,7 +227,7 @@ export default function Details() {
                     if(seniorCount > 0)
                         totalPrice = price + basePrice;
                     else totalPrice = seatCount * movieDetails.m_price;
-                } else if (movieDetails.m_type.toUpperCase() === 'PREMIERE' || movieDetails.m_type.toUpperCase() === 'PREMIER' ) {
+                } else if (movieDetails.m_type.toUpperCase() === 'PREMIERE') {
                     totalPrice = seatCount * movieDetails.m_price;
                 }
                 setTotalPrice(totalPrice);
@@ -307,7 +307,7 @@ export default function Details() {
                                 size="small"
                             />
                         </Box>
-                        <Box display="flex" alignItems="center" mt={2} mb={3} width={190} height={20} justifyContent="space-between">
+                        <Box display="flex" alignItems="center" mt={2} mb={3} width={200} height={20} justifyContent="space-between">
                             {!movieDetails || movieDetails.m_type !== 'premiere' ? (
                                 <IconButton onClick={handleDecrement}>
                                     <RemoveIcon />
@@ -319,7 +319,7 @@ export default function Details() {
                                 label="Senior Citizens"
                                 size="small"
                                 inputProps={{ readOnly: true, style: { textAlign: 'center', height: '15px' } }}
-                                sx={{ width: '200px', textAlign: 'center', '& .MuiInputBase-input': { height: '40px' } }}
+                                sx={{ width: '120px', textAlign: 'center', '& .MuiInputBase-input': { height: '40px' }, marginLeft: '10px' }}
                             />
                             {!movieDetails || movieDetails.m_type !== 'premiere' ? (
                                 <IconButton onClick={handleIncrement}>
