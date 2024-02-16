@@ -247,7 +247,7 @@ export default function Details() {
         const seconds = currentDate.getSeconds(); // Seconds (0-59)
     
         // Construct a string representation of the current date and time
-        const currentDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        const currentDateTime = `${year}${month}${day}${hours}${minutes}${seconds}`;
     
         return currentDateTime;
     }
