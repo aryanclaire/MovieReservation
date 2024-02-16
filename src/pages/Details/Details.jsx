@@ -227,7 +227,7 @@ export default function Details() {
                     if(seniorCount > 0)
                         totalPrice = price + basePrice;
                     else totalPrice = seatCount * movieDetails.m_price;
-                } else if (movieDetails.m_type.toUpperCase() === 'PREMIERE') {
+                } else if (movieDetails.m_type.toUpperCase() === 'PREMIERE' || movieDetails.m_type.toUpperCase() === 'PREMIER' ) {
                     totalPrice = seatCount * movieDetails.m_price;
                 }
                 setTotalPrice(totalPrice);
@@ -373,7 +373,7 @@ export default function Details() {
                     <div className='table'>
                         <TableContainer component={Paper} sx={{ width: '95%', maxHeight: MAX_ROWS_BEFORE_SCROLL * 40 + 20, overflowY: 'auto'  }}>
                             <Table size="small" aria-label="a dense table">
-                                <TableHead sx={{ backgroundColor: '#BBE2EC' }}>
+                                <TableHead sx={{ backgroundColor: '#BBE2EC', position: 'sticky', top: 0, zIndex: 1000 }}>
                                     <TableRow>
                                         <TableCell align='center'><Typography fontWeight='bold' fontSize='small'>SEAT</Typography></TableCell>
                                         <TableCell align="center"><Typography fontWeight='bold' fontSize='small'>PRICE</Typography></TableCell>
