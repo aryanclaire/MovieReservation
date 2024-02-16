@@ -9,7 +9,8 @@ export default function ReservationList() {
         <h2>List of Reservation </h2> 
         <Box className="reserv-cont" style={{ display: 'flex' }}>
             {/* <MovieTable/> */}
-            <Backup/>
+            {/* <Backup/> */}
+            <MovieTable/>
         </Box>
     </div>
   )
