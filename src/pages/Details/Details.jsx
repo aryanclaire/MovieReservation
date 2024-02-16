@@ -110,25 +110,25 @@ export default function Details() {
         //setSelectedSeats([]);
         setPaymentConfirmed(false);
     };
-    const handleUpdateSeats = (seatId) => {
-        // setSelectedSeats([...selectedSeats, seatId]); // Add the selected seat to the array
-    };
-    const handleCancel = () => {
-        // Empty selected seats
+    const handleUpdateSeats = () => {
         emptySelectedSeats();
-
-        // Clear form fields
-        setFirstName('');
-        setMiddleName('');
-        setLastName('');
     };
+    // const handleCancel = () => {
+    //     // Empty selected seats
+    //     emptySelectedSeats();
+
+    //     // Clear form fields
+    //     setFirstName('');
+    //     setMiddleName('');
+    //     setLastName('');
+    // };
     const handleBackdropClick = (event) => {
         // Prevent closing the modal if the backdrop is clicked
         event.stopPropagation();
     };
     const emptySelectedSeats = () => {
         // Empty selected seats by resetting the state variable to an empty array
-        //setSelectedSeats([]);
+        decodedSelectedSeats = []
     };
     const handleIncrement = () => {
         if (seniorCount < decodedSelectedSeats.length)
@@ -258,8 +258,8 @@ export default function Details() {
     
     // Call the function to get the current date and time
     const currentDateTime = getCurrentDateTime();
-    
     // console.log("Current Date and Time:", currentDateTime);
+    const MAX_ROWS_BEFORE_SCROLL = 3; // Maximum number of rows before enabling scroll
 
     return (
         <div className='container1'>
@@ -307,7 +307,7 @@ export default function Details() {
                                 size="small"
                             />
                         </Box>
-                        <Box display="flex" alignItems="center" mt={2} mb={3} width={190} height={20} justifyContent="space-between">
+                        <Box display="flex" alignItems="center" mt={2} mb={3} width={200} height={20} justifyContent="space-between">
                             {!movieDetails || movieDetails.m_type !== 'premiere' ? (
                                 <IconButton onClick={handleDecrement}>
                                     <RemoveIcon />
@@ -319,7 +319,7 @@ export default function Details() {
                                 label="Senior Citizens"
                                 size="small"
                                 inputProps={{ readOnly: true, style: { textAlign: 'center', height: '15px' } }}
-                                sx={{ width: '200px', textAlign: 'center', '& .MuiInputBase-input': { height: '40px' } }}
+                                sx={{ width: '120px', textAlign: 'center', '& .MuiInputBase-input': { height: '40px' }, marginLeft: '10px' }}
                             />
                             {!movieDetails || movieDetails.m_type !== 'premiere' ? (
                                 <IconButton onClick={handleIncrement}>
@@ -371,9 +371,9 @@ export default function Details() {
                         <Typography mt={1} mr={2}>Total Number of Seats Reserved: {decodedSelectedSeats.length}</Typography>
                     </div>
                     <div className='table'>
-                        <TableContainer component={Paper} sx={{ width: '95%' }}>
+                        <TableContainer component={Paper} sx={{ width: '95%', maxHeight: MAX_ROWS_BEFORE_SCROLL * 40 + 20, overflowY: 'auto'  }}>
                             <Table size="small" aria-label="a dense table">
-                                <TableHead sx={{ backgroundColor: '#BBE2EC' }}>
+                                <TableHead sx={{ backgroundColor: '#BBE2EC', position: 'sticky', top: 0, zIndex: 1000 }}>
                                     <TableRow>
                                         <TableCell align='center'><Typography fontWeight='bold' fontSize='small'>SEAT</Typography></TableCell>
                                         <TableCell align="center"><Typography fontWeight='bold' fontSize='small'>PRICE</Typography></TableCell>
@@ -440,10 +440,10 @@ export default function Details() {
                         </TableContainer>
                     </div>
 
-                    <Stack spacing={10} direction="row" marginTop={2} marginBottom={1.5} justifyContent='center'>
-                        <Button 
+                    <Stack spacing={10} direction="row" marginTop={2} marginBottom={1.5} marginLeft={52.5}>
+                        {/* <Button 
                             as={Link}
-                            to="/movies"
+                            to="/"
                             variant="contained" 
                             onClick={handleCancel}
                             sx={{
@@ -457,7 +457,7 @@ export default function Details() {
                             }}
                         >
                             Cancel
-                        </Button>
+                        </Button> */}
                         <Button 
                             variant="contained" 
                             onClick={handleOpenModal}

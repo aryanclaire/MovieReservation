@@ -129,8 +129,8 @@ const renderSeats = () => {
                             <MoreDetails variant='subtitle1'><b>DATE: </b> {new Date(movie?.m_date).toLocaleDateString()}</MoreDetails>
                             <MoreDetails variant='subtitle1'><b>TIME: </b> {new Date(movie?.m_starttime).toLocaleTimeString()} -  {new Date(movie?.m_endtime).toLocaleTimeString()}</MoreDetails>
                             <MoreDetails variant='subtitle1'><b>DURATION: </b>  {movie?.m_hrs} hrs</MoreDetails>
-                            <MoreDetails variant='subtitle1'><b>TYPE: </b> {movie?.m_type} </MoreDetails>
-                            <MoreDetails variant='subtitle1'><b>PRICE: </b> {movie?.m_price} </MoreDetails>
+                            <MoreDetails variant='subtitle1'><b>TYPE: </b> {movie?.m_type.toUpperCase()} </MoreDetails>
+                            <MoreDetails variant='subtitle1'><b>PRICE: </b>  ₱{movie?.m_price.toFixed(2)} </MoreDetails>
                         </Box>
                     </Box>
                     <Box>
