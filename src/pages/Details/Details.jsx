@@ -80,7 +80,7 @@ export default function Details() {
         };
         try {
             decodedSelectedSeats.map(async (seat, index) => {
-                const response = await fetch(`http://localhost:5555/api/movies/updateMovieSeat/${movieId}/${seat}`, {
+                const response = await fetch(`http://localhost:5555/api/movies/${movieId}/${seat}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
