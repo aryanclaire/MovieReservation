@@ -24,6 +24,8 @@ export default function Details() {
     // Get the dynamic part of the URL
     const movieId = window.location.pathname.split('/')[2];
     let decodedSelectedSeats = JSON.parse(decodeURIComponent(window.location.pathname.split('/')[3]));
+    console.log("shit");
+    console.log(movieId);
     // const location = useLocation();
     // const selectedSeats = location.state?.selectedSeats || [];
     // const { selectedSeats } = useParams();
@@ -50,7 +52,9 @@ export default function Details() {
             senior: seniorCount,
             res_id: currentDateTime,
             seat: decodedSelectedSeats,
-            amt_pay: totalPrice
+            amt_pay: totalPrice,
+            isCancel: false,
+            m_id: movieId
         };
     
         try {
@@ -188,7 +192,7 @@ export default function Details() {
                     throw new Error('Failed to fetch seat details');
                 }
                 const seatData = await response.json();
-                console.log(seatData);
+                // console.log(seatData);
                 const seatCount = seatData.length;
     
                 // if (movieDetails.m_type === 'REGULAR') {
@@ -209,7 +213,7 @@ export default function Details() {
         }
     }, [movieId, movieDetails, seniorCount]);
     useEffect(() => {
-        console.log("Selected Seats:", decodedSelectedSeats);
+        // console.log("Selected Seats:", decodedSelectedSeats);
     }, [decodedSelectedSeats]);
     useEffect(() => {
         const calculateTotalPrice = () => {
@@ -255,7 +259,7 @@ export default function Details() {
     // Call the function to get the current date and time
     const currentDateTime = getCurrentDateTime();
     
-    console.log("Current Date and Time:", currentDateTime);
+    // console.log("Current Date and Time:", currentDateTime);
 
     return (
         <div className='container1'>
