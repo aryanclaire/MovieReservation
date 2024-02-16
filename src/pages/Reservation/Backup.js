@@ -33,7 +33,7 @@ export default function Backup() {
                             <TableCell>{row.senior}</TableCell>
                             <TableCell>{row.seat.join(', ')}</TableCell>
                             <TableCell>{row.amt_pay}</TableCell>
-                            <TableCell>{row._id}</TableCell>
+                            <TableCell>{row.m_id} shit</TableCell>
                             <TableCell>{row.isCancel ? 'Yes' : 'No'}</TableCell>
                         </TableRow>
                     ))}
