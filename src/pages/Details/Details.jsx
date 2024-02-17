@@ -212,9 +212,9 @@ export default function Details() {
             fetchSeatDetails();
         }
     }, [movieId, movieDetails, seniorCount]);
-    useEffect(() => {
-        // console.log("Selected Seats:", decodedSelectedSeats);
-    }, [decodedSelectedSeats]);
+    // useEffect(() => {
+    //     // console.log("Selected Seats:", decodedSelectedSeats);
+    // }, [decodedSelectedSeats]);
     useEffect(() => {
         const calculateTotalPrice = () => {
             if (movieDetails && decodedSelectedSeats) {
@@ -260,6 +260,8 @@ export default function Details() {
     const currentDateTime = getCurrentDateTime();
     // console.log("Current Date and Time:", currentDateTime);
     const MAX_ROWS_BEFORE_SCROLL = 3; // Maximum number of rows before enabling scroll
+    const regular = (decodedSelectedSeats.length - seniorCount) * (movieDetails ? movieDetails.m_price : 0);
+    const discount = (movieDetails && movieDetails.m_type.toUpperCase() === 'REGULAR' && seniorCount > 0) ? (movieDetails.m_price * 0.8 * seniorCount) : 0;
 
     return (
         <div className='container1'>
@@ -354,7 +356,7 @@ export default function Details() {
                                     <Typography sx={{ fontStyle: 'italic', fontSize: '0.9rem', textAlign: 'left' }}>Duration: {movieDetails.duration.hours} hr {movieDetails.duration.minutes} min</Typography>
                                 </Grid>
                                 <Grid item xs={4}>
-                                    <Typography sx={{ fontStyle: 'italic', fontSize: '0.9rem', textAlign: 'left' }}>Price: ₱ {movieDetails.m_price.toFixed(2)}</Typography>
+                                    <Typography sx={{ fontStyle: 'italic', fontSize: '0.9rem', textAlign: 'left' }}>Price: PHP {movieDetails.m_price.toFixed(2)}</Typography>
                                 </Grid>
                                 <Grid item xs={4}></Grid>
                                 <Grid item xs={4}>
@@ -383,7 +385,7 @@ export default function Details() {
                                     {decodedSelectedSeats.map((seat, index) => (
                                         <TableRow key={index}>
                                             <TableCell align='center'>{seat}</TableCell>
-                                            <TableCell align='center'> ₱ {movieDetails ? movieDetails.m_price.toFixed(2) : '-'}</TableCell>
+                                            <TableCell align='center'> PHP {movieDetails ? movieDetails.m_price.toFixed(2) : '-'}</TableCell>
                                             {/* <TableCell>{seat}</TableCell> */}
                                             {/* Display more properties of the seat if available*/ }
                                         </TableRow>
@@ -415,30 +417,36 @@ export default function Details() {
                     <div className='title'>
                         <Typography  variant="h6" ml={1} fontWeight='bold'>PAYMENT BREAKDOWN</Typography>
                     </div>
-                    <div className='table'>
-                        <TableContainer component={Paper} sx={{ width: '95%' }}>
-                            <Table size="small" aria-label="a dense table">
-                                <TableBody sx={{ backgroundColor: '#f0f0f0' }}>
-                                    <TableRow>
-                                        <TableCell align='left'><Typography fontWeight='bold' fontSize='small'>Type: </Typography></TableCell>
-                                        <TableCell align="right">{movieDetails ? movieDetails.m_type.toUpperCase() : '-'}</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell align='left'><Typography fontWeight='bold' fontSize='small'>Number of Seats: </Typography></TableCell>
-                                        <TableCell align="right">{decodedSelectedSeats.length}</TableCell>
-                                    </TableRow>
-                                    {/* <TableRow>
-                                        <TableCell align='left'><Typography fontWeight='bold' fontSize='small'>Discount: </Typography></TableCell>
-                                        <TableCell align="right">20%</TableCell>
-                                    </TableRow> */}
-                                    <TableRow>
-                                        <TableCell></TableCell>
-                                        <TableCell align='right'><Typography fontWeight='bold' fontSize='small'>AMOUNT TO PAY: ₱ {totalPrice.toFixed(2)}</Typography></TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </div>
+                    {movieDetails && (
+                        <div className='table'>
+                            <TableContainer component={Paper} sx={{ width: '95%' }}>
+                                <Table size="small" aria-label="a dense table">
+                                    <TableBody sx={{ backgroundColor: '#f0f0f0' }}>
+                                        <TableRow>
+                                            <TableCell align='left'><Typography fontWeight='bold' fontSize='small'>Type: </Typography></TableCell>
+                                            <TableCell align="right">{movieDetails ? movieDetails.m_type.toUpperCase() : '-'}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell align='left'><Typography fontWeight='bold' fontSize='small'>Number of Seats: </Typography></TableCell>
+                                            <TableCell align="right">{decodedSelectedSeats.length}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell align='left'><Typography fontWeight='bold' fontSize='small'>Discounted Seats: [{seniorCount}]</Typography></TableCell>
+                                            <TableCell align="right">PHP {discount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell align='left'><Typography fontWeight='bold' fontSize='small'>Regular Seats: [{decodedSelectedSeats.length - seniorCount}]</Typography></TableCell>
+                                            <TableCell align="right">PHP {regular.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell></TableCell>
+                                            <TableCell align='right'><Typography fontWeight='bold' fontSize='small'>TOTAL AMOUNT TO PAY: PHP {totalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</Typography></TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </div>
+                    )}
 
                     <Stack spacing={10} direction="row" marginTop={2} marginBottom={1.5} marginLeft={52.5}>
                         {/* <Button 
@@ -482,7 +490,7 @@ export default function Details() {
                             <Typography variant='h5' sx={{ fontWeight: 'bold', mt: 2, mb: 2, ml: 12 }}>Confirm Payment</Typography>
                             <Typography>Name:   {firstName} {middleName} {lastName}</Typography>
                             <Typography>Reservation ID:  {currentDateTime}</Typography>
-                            <Typography>Amount to Pay:   ₱ {totalPrice.toFixed(2)}</Typography>
+                            <Typography>Amount to Pay:   PHP {totalPrice.toFixed(2)}</Typography>
                             <Stack spacing={5} direction="row" marginTop={5} marginLeft={10} marginBottom={5}>
                                 <Button 
                                     variant='contained' 

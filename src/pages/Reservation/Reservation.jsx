@@ -47,9 +47,25 @@ function Reservation() {
 
     const [selectedSeats, setSelectedSeats] = useState([]);
 
+    // State to track whether all seats are selected
+    const [selectAll, setSelectAll] = useState(false);
+
     const handleSeatClick = (seatId) => {
-        setSelectedSeats([...selectedSeats, seatId]); // Push the clicked seatId into the selectedSeats array
+        setSelectedSeats((prevSelectedSeats) => {
+            const isSeatSelected = prevSelectedSeats.includes(seatId);
+    
+            if (isSeatSelected) {
+                // If seat is already selected, remove it
+                return prevSelectedSeats.filter((seat) => seat !== seatId);
+            } else {
+                // If seat is not selected, add it
+                return [...prevSelectedSeats, seatId];
+            }
+        });
     };
+    const availableSeats = movie ? movie.m_seat.length - selectedSeats.length : 0;
+    
+    const reservedSeats = selectedSeats.length;
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -83,7 +99,7 @@ const renderSeats = () => {
             <Box
                 key={seat._id}
                 style={{ textAlign: 'center', cursor: seat.is_occupied ? 'not-allowed' : 'pointer' }}
-                onClick={!seat.is_occupied ? () => handleSeatClick(seat.position) : null} // Call handleSeatClick on click if seat is not occupied
+                onClick={!seat.is_occupied ? () => handleSeatClick(seat.position) : () => handleSeatClick(seat.position)} // Always call handleSeatClick on click
             >
                 <div style={{ color: seat.is_occupied ? '#f57c00' : (isSeatSelected ? '#0288d1' : '#388e3c'), fontWeight: isSeatSelected ? 'bold' : 'normal' }}>
                     <EventSeatIcon style={{ fontSize: '40px', marginBottom: '-20px' }} />
@@ -105,9 +121,26 @@ const renderSeats = () => {
 
     return rows;
 };
-    useEffect(() => {
-        console.log(selectedSeats); 
-    }, [selectedSeats]);
+useEffect(() => {
+    console.log(selectedSeats); 
+}, [selectedSeats]);
+
+// Function to handle clicking on the "Select All Seats" button
+const handleSelectAllSeats = () => {
+    if (selectAll) {
+        // If all seats are already selected, unselect all seats
+        setSelectedSeats([]);
+        setSelectAll(false);
+    } else {
+        // If all seats are not selected, select all seats
+        const newSelectedSeats = movie.m_seat
+            .filter(seat => !seat.is_occupied)
+            .map(seat => seat.position);
+
+        setSelectedSeats(newSelectedSeats);
+        setSelectAll(true);
+    }
+};
 
     return (
         <Box>
@@ -137,8 +170,8 @@ const renderSeats = () => {
                         <Box style={{ display: 'flex', justifyContent: 'space-between'}} >
                             <Box className="summary">
                                 <Typography variant='h6' style={{ marginTop: '15px', marginBottom: '15px'}} ><b>SEAT SUMMARY</b></Typography>
-                                <SummaryTypography > Available Seats: 30</SummaryTypography>
-                                <SummaryTypography > Reserved Searts: 10</SummaryTypography>
+                                <SummaryTypography > Available Seats: {availableSeats}</SummaryTypography>
+                                <SummaryTypography > Reserved Seats: {reservedSeats}</SummaryTypography>
                                 <Divider style={{background:'#0D99FF', marginTop: '10px' }}/>
                                 <SummaryTypography  style={{ marginTop: '10px'}}> Total Number of Seats: 40</SummaryTypography>
                             </Box>
@@ -167,6 +200,16 @@ const renderSeats = () => {
                     <Typography></Typography>
                     <Box style={{ width: '400px', margin: '0 auto' }}>
                         {renderSeats()}
+                    </Box>
+                    <Box>
+                        {/* Button to select all seats */}
+                        <Button
+                            variant="outlined"
+                            onClick={handleSelectAllSeats}
+                            style={{ width: '100%', marginTop: '30px' }}
+                        >
+                            {selectAll ? 'Unselect All Seats' : 'Select All Seats'}
+                        </Button>
                     </Box>
                     <Box>
                         <Button 
