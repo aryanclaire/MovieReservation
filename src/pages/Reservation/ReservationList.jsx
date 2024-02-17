@@ -1,15 +1,13 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material';
-import MovieTable from './MovieTable';
-import Backup from './Backup';
+import ReserveTable from './ReserveTable';
 
 export default function ReservationList() {
   return (
     <div className='reserv'>
         <h2>List of Reservation </h2> 
-        
-            <MovieTable/>
-        
+        {/* CALL RESERVE TABLE COMPONENTS */}
+            <ReserveTable/>
     </div>
   )
 }

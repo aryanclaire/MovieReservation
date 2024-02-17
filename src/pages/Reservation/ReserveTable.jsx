@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, TableCell, TableContainer, Table, TableHead, TableRow, Paper, TableBody, Button, Dialog, DialogTitle, DialogContent, DialogActions, Typography, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
-export default function Backup() {
+export default function ReserveTable() {
     const [reserve, setReserve] = useState([]);
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedReservationId, setSelectedReservationId] = useState(null);
@@ -30,8 +30,9 @@ export default function Backup() {
         setOpenDialog(true);
     };
 
+    // DISPLAY DIALOG
     const handleCancelConfirm = async () => {
-        // Perform the cancellation action here
+        // REQUEST TO UPDTAE THE RESERVATION INTO CANCEL STATUS
         const updatedReserve = reserve.map(async (item) => {
             if (item.res_id === selectedReservationId) {
                 const dataRes = { isCancel: true }
@@ -42,6 +43,7 @@ export default function Backup() {
                     },
                     body: JSON.stringify(dataRes)
                 });
+                // MAP ALL THE RESERVE SEATS AND UPDATE 
                 try {
                     const formData = { is_occupied: false };
                     for (const seat of item.seat) {
@@ -66,10 +68,12 @@ export default function Backup() {
         setOpenDialog(false);
     };
 
+    // 
     const handleCancelReject = () => {
         setOpenDialog(false);
     };
 
+    // HANDLE FILTER
     const filteredReserve = reserve.filter(item => {
         return (
             item.res_id.includes(reservationIdFilter) &&
@@ -119,6 +123,7 @@ export default function Backup() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                            {/* DISPLAY WITH FILTER  */}
                             {filteredReserve.map((row) => (
                                 <TableRow key={row._id}>
                                     <TableCell>{row.res_id}</TableCell>

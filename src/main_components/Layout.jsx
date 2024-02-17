@@ -162,12 +162,12 @@ export default function MiniDrawer() {
           </ListItem>
 
           {/* go to movies */}
-          {/* <ListItem key='Movies' disablePadding>
+          <ListItem key='Movies' disablePadding>
             <ListItemButton component={Link} to="/movies"> 
                 <ListItemIconStyled><LiveTvIcon/></ListItemIconStyled>
                 <ListItemTextStyled primary='Movies' />
             </ListItemButton>
-          </ListItem> */}
+          </ListItem>
         
           {/* go to details */}
           {/* <ListItem key='Details' disablePadding>

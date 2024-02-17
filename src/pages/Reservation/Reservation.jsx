@@ -40,17 +40,19 @@ const SummaryTypography = styled(Typography)({
 });
 
 function Reservation() {
-    // Get the dynamic part of the URL
+    // GET THE DATA FROM URL
     const movieId = window.location.pathname.split('/')[2];    
 
+    // INITIALIZE THE DATA
     const [movie, setMovie] = useState(null);
-
     const [selectedSeats, setSelectedSeats] = useState([]);
 
+    // EVENT FUNCTIONS
     const handleSeatClick = (seatId) => {
         setSelectedSeats([...selectedSeats, seatId]); // Push the clicked seatId into the selectedSeats array
     };
 
+    // REQUEST SPECIFIC MOVIES BY ID
     useEffect(() => {
         const fetchMovies = async () => {
             try {
@@ -68,14 +70,13 @@ function Reservation() {
         fetchMovies();
     }, [movieId]); // Ensure useEffect runs when movieId changes
 
-    // Function to render the seats in a grid format
-    // Function to render the seats in a grid format
+// RENDER SEATS IN GRID FROMAT
 const renderSeats = () => {
     if (!movie || !movie.m_seat) return null;
 
+    // MAKING 2D ARRAY
     const rows = [];
     let row = [];
-
     movie.m_seat.forEach((seat, index) => {
         const isSeatSelected = selectedSeats.includes(seat.position); // Check if seat is selected
 
@@ -107,16 +108,19 @@ const renderSeats = () => {
 };
     useEffect(() => {
         console.log(selectedSeats); 
-    }, [selectedSeats]);
+    }, [selectedSeats]);  
 
     return (
         <Box>
             <Box className="movie-cont" style={{ display: 'flex', justifyContent:'space-between' }}>
                 <MovieDetail className="movie-details" style={{ width: '55%' }}>
                     <Box style={{ display: 'flex', justifyContent:'space-between'}}>
+                        {/* DISPLAY MOVIE, DETAILS AND LEGEND */}
                         <MovieImage className="movie-image" style={{ width: '50%' }}>
                             <Box className="movie-image" style={{ width: '20%' }}>
-                                <img src='/avatar.jpg' alt="{movie.m_title}" style={{ width: '300px', height: '400px' }} />
+                                {movie && (
+                                    <img src={`/${movie.m_poster}`} alt={movie.m_title} style={{ width: '300px', height: '400px' }} />
+                                )}                            
                             </Box>
 
                         </MovieImage>
@@ -128,20 +132,24 @@ const renderSeats = () => {
                             <MoreDetails variant='subtitle1'><b>MPA FILM RATING: </b> {movie?.m_cinema}</MoreDetails>
                             <MoreDetails variant='subtitle1'><b>DATE: </b> {new Date(movie?.m_date).toLocaleDateString()}</MoreDetails>
                             <MoreDetails variant='subtitle1'><b>TIME: </b> {new Date(movie?.m_starttime).toLocaleTimeString()} -  {new Date(movie?.m_endtime).toLocaleTimeString()}</MoreDetails>
-                            <MoreDetails variant='subtitle1'><b>DURATION: </b>  {movie?.m_hrs} hrs</MoreDetails>
+                            <MoreDetails variant='subtitle1'><b>DURATION: </b>  {movie?.m_hrs} mins</MoreDetails>
                             <MoreDetails variant='subtitle1'><b>TYPE: </b> {movie?.m_type.toUpperCase()} </MoreDetails>
                             <MoreDetails variant='subtitle1'><b>PRICE: </b>  ₱{movie?.m_price.toFixed(2)} </MoreDetails>
                         </Box>
                     </Box>
                     <Box>
                         <Box style={{ display: 'flex', justifyContent: 'space-between'}} >
+
+                            {/* COMMENT OUT -- THIS FOR THE MEAN TIME  */}
                             <Box className="summary">
                                 <Typography variant='h6' style={{ marginTop: '15px', marginBottom: '15px'}} ><b>SEAT SUMMARY</b></Typography>
                                 <SummaryTypography > Available Seats: 30</SummaryTypography>
-                                <SummaryTypography > Reserved Searts: 10</SummaryTypography>
+                                <SummaryTypography > Reserved Seats: 10</SummaryTypography>
                                 <Divider style={{background:'#0D99FF', marginTop: '10px' }}/>
                                 <SummaryTypography  style={{ marginTop: '10px'}}> Total Number of Seats: 40</SummaryTypography>
                             </Box>
+
+                           
                             <Box className="legend">
                                 <Typography variant='h6' style={{ marginTop: '15px', marginBottom: '15px'}} ><b>LEGEND</b></Typography>
                                 <Legend >
@@ -162,21 +170,21 @@ const renderSeats = () => {
                     </Box>
                 </MovieDetail>
 
-                {/* this is the seat */}
+                {/*  {/* DISPLAY THE SEAT LAYOUT */} 
                 <Box className="seat-details" style={{ width: '40%', background:'#fff', borderRadius: '10px', textAlign: 'center', padding: '25px' }}>
                     <Typography></Typography>
+                    <Box mb={2}>SCREEN</Box>
                     <Box style={{ width: '400px', margin: '0 auto' }}>
                         {renderSeats()}
                     </Box>
+                    <Box style={{display: 'flex', justifyContent: 'space-between', marginTop: "2px"}}>
+                        <Box>EXIT</Box> <Box>ENTRANCE</Box>
+                    </Box>
+        
                     <Box>
                         <Button 
                             variant="outlined"  
                             component={Link} 
-                            //to={`/details/${movieId}`} 
-                            // to={{
-                            //     pathname: `/details/${movieId}`,    
-                            //     state: { selectedSeats: selectedSeats } // Pass selected seats as state
-                            // }}
                             to={`/details/${movieId}${selectedSeats.length > 0 ? `/${JSON.stringify(selectedSeats)}` : ''}`}
                             style={{ width: '100%', marginTop: '30px' }}
                         >

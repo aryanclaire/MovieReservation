@@ -91,6 +91,8 @@ const SelectMovies = () => {
       <Box className="movies-cont" style={{ display: 'flex' }}>
         <Box className="movie-list" style={{ width: '75%' }}>
           <StyledPaper>
+
+          {/* CALL MOVIE ITEM COMPONENTS */}
           {movies.length === 0 ? (
             <Typography>No movies available</Typography>
           ) : (
@@ -98,6 +100,7 @@ const SelectMovies = () => {
               <MovieItem key={movie._id} movie={movie}/>
             ))
           )}
+
           </StyledPaper>
         </Box>
         <Box className="movie-option" style={{ width: '25%', paddingLeft: '15px' }}>
@@ -121,7 +124,7 @@ const SelectMovies = () => {
           
           <Box>
               <Button variant="outlined" onClick={handleSelectMovie} style={{ width: '100%', marginTop: '30px', background:'#000', color:'#fff' }}>
-                  Select Movie
+                  Select Date
               </Button>
           </Box>
         </Box>
