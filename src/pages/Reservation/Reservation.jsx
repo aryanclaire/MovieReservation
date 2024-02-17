@@ -149,7 +149,6 @@ const renderSeats = () => {
                                 <SummaryTypography  style={{ marginTop: '10px'}}> Total Number of Seats: 40</SummaryTypography>
                             </Box>
 
-                           
                             <Box className="legend">
                                 <Typography variant='h6' style={{ marginTop: '15px', marginBottom: '15px'}} ><b>LEGEND</b></Typography>
                                 <Legend >
