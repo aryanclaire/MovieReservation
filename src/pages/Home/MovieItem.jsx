@@ -3,9 +3,11 @@ import styled from "@emotion/styled";
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { Link } from 'react-router-dom';
 
+
+// STYLING
 const StyledImage = styled(Box)({
   width: '30px',
-  padding: '20px' // Removed background color
+  padding: '20px' 
 });
 
 const MPATypography = styled(Typography)({
@@ -26,6 +28,7 @@ const MoreTypography = styled(Typography)({
   marginTop: '10px'
 });
 
+// MOVIE ITEM COMPONENT
 const MovieItem = ({ movie }) => {
   return (
     <React.Fragment key={movie.m_title}>
@@ -42,7 +45,7 @@ const MovieItem = ({ movie }) => {
           </Box>
           <MovieDetails>{movie.m_desc}</MovieDetails>
           <MoreTypography>
-            Cinema: {movie.m_cinema} | Date: {new Date(movie.m_date).toLocaleDateString()} | Duration: {movie.m_hrs} hrs | Start time: {new Date(movie.m_starttime).toLocaleTimeString()} - End time: {new Date(movie.m_endtime).toLocaleTimeString()}
+            Cinema: {movie.m_cinema} | Date: {new Date(movie.m_date).toLocaleDateString()} | Duration: {movie.m_hrs} mins | Start time: {new Date(movie.m_starttime).toLocaleTimeString()} - End time: {new Date(movie.m_endtime).toLocaleTimeString()}
           </MoreTypography>
           <Box>
             <Button component={Link} to={`/movies/${movie._id}`}>More Details</Button>

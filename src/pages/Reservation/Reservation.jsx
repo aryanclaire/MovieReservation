@@ -47,9 +47,6 @@ function Reservation() {
 
     const [selectedSeats, setSelectedSeats] = useState([]);
 
-    // State to track whether all seats are selected
-    const [selectAll, setSelectAll] = useState(false);
-
     const handleSeatClick = (seatId) => {
         setSelectedSeats((prevSelectedSeats) => {
             const isSeatSelected = prevSelectedSeats.includes(seatId);
@@ -66,6 +63,9 @@ function Reservation() {
     const availableSeats = movie ? movie.m_seat.length - selectedSeats.length : 0;
     
     const reservedSeats = selectedSeats.length;
+
+    // State to track whether all seats are selected
+    const [selectAll, setSelectAll] = useState(false);
 
     useEffect(() => {
         const fetchMovies = async () => {

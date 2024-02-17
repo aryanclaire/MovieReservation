@@ -26,11 +26,6 @@ export default function Details() {
     let decodedSelectedSeats = JSON.parse(decodeURIComponent(window.location.pathname.split('/')[3]));
     console.log("shit");
     console.log(movieId);
-    // const location = useLocation();
-    // const selectedSeats = location.state?.selectedSeats || [];
-    // const { selectedSeats } = useParams();
-    // const decodedSelectedSeats = selectedSeats ? JSON.parse(selectedSeats) : [];
-
 
     const handleCloseModal = () => {
         setOpenModal(false);
@@ -113,15 +108,7 @@ export default function Details() {
     const handleUpdateSeats = () => {
         emptySelectedSeats();
     };
-    // const handleCancel = () => {
-    //     // Empty selected seats
-    //     emptySelectedSeats();
-
-    //     // Clear form fields
-    //     setFirstName('');
-    //     setMiddleName('');
-    //     setLastName('');
-    // };
+    
     const handleBackdropClick = (event) => {
         // Prevent closing the modal if the backdrop is clicked
         event.stopPropagation();
@@ -194,14 +181,6 @@ export default function Details() {
                 const seatData = await response.json();
                 // console.log(seatData);
                 const seatCount = seatData.length;
-    
-                // if (movieDetails.m_type === 'REGULAR') {
-                //     const discountedPrice = seniorCount > 0 ? movieDetails.m_price * 0.8 : movieDetails.m_price;
-                //     const basePrice = (seatCount - seniorCount) * discountedPrice;
-                //     setTotalPrice(discountedPrice + basePrice);
-                // } else if (movieDetails.m_type === 'PREMIERE') {
-                //     setTotalPrice(seatCount * movieDetails.m_price);
-                // }
     
             } catch (error) {
                 console.error('Error fetching seat details:', error);
@@ -449,23 +428,6 @@ export default function Details() {
                     )}
 
                     <Stack spacing={10} direction="row" marginTop={2} marginBottom={1.5} marginLeft={52.5}>
-                        {/* <Button 
-                            as={Link}
-                            to="/"
-                            variant="contained" 
-                            onClick={handleCancel}
-                            sx={{
-                                width:'205px',
-                                backgroundColor: 'gray',
-                                '&:hover': {
-                                    backgroundColor: 'gray',
-                                },
-                                borderRadius: '5px',
-                                textDecoration:'none'
-                            }}
-                        >
-                            Cancel
-                        </Button> */}
                         <Button 
                             variant="contained" 
                             onClick={handleOpenModal}
