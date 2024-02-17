@@ -40,12 +40,10 @@ const SummaryTypography = styled(Typography)({
 });
 
 function Reservation() {
-    // Get the dynamic part of the URL
-    const movieId = window.location.pathname.split('/')[2];    
-
+    const movieId = window.location.pathname.split('/')[2];    // Get the dynamic part of the URL
     const [movie, setMovie] = useState(null);
-
     const [selectedSeats, setSelectedSeats] = useState([]);
+    const [selectAll, setSelectAll] = useState(false);      // State to track whether all seats are selected
 
     const handleSeatClick = (seatId) => {
         setSelectedSeats((prevSelectedSeats) => {
@@ -63,9 +61,6 @@ function Reservation() {
     const availableSeats = movie ? movie.m_seat.length - selectedSeats.length : 0;
     
     const reservedSeats = selectedSeats.length;
-
-    // State to track whether all seats are selected
-    const [selectAll, setSelectAll] = useState(false);
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -86,61 +81,61 @@ function Reservation() {
 
     // Function to render the seats in a grid format
     // Function to render the seats in a grid format
-const renderSeats = () => {
-    if (!movie || !movie.m_seat) return null;
+    const renderSeats = () => {
+        if (!movie || !movie.m_seat) return null;
 
-    const rows = [];
-    let row = [];
+        const rows = [];
+        let row = [];
 
-    movie.m_seat.forEach((seat, index) => {
-        const isSeatSelected = selectedSeats.includes(seat.position); // Check if seat is selected
+        movie.m_seat.forEach((seat, index) => {
+            const isSeatSelected = selectedSeats.includes(seat.position); // Check if seat is selected
 
-        row.push(
-            <Box
-                key={seat._id}
-                style={{ textAlign: 'center', cursor: seat.is_occupied ? 'not-allowed' : 'pointer' }}
-                onClick={!seat.is_occupied ? () => handleSeatClick(seat.position) : () => handleSeatClick(seat.position)} // Always call handleSeatClick on click
-            >
-                <div style={{ color: seat.is_occupied ? '#f57c00' : (isSeatSelected ? '#0288d1' : '#388e3c'), fontWeight: isSeatSelected ? 'bold' : 'normal' }}>
-                    <EventSeatIcon style={{ fontSize: '40px', marginBottom: '-20px' }} />
-                </div>
-                <Typography variant='overline' style={{ color: !seat.is_occupied && isSeatSelected ? '#0288d1' : seat.is_occupied ? '#f57c00' : '#388e3c', fontWeight: isSeatSelected ? 'bold' : 'normal' }}>{seat.position}</Typography>
-            </Box>
-        );
-
-        // Add the row to rows array when 5 seats are added or it's the last seat
-        if ((index + 1) % 5 === 0 || index === movie.m_seat.length - 1) {
-            rows.push(
-                <div key={index} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    {row}
-                </div>
+            row.push(
+                <Box
+                    key={seat._id}
+                    style={{ textAlign: 'center', cursor: seat.is_occupied ? 'not-allowed' : 'pointer' }}
+                    onClick={!seat.is_occupied ? () => handleSeatClick(seat.position) : () => handleSeatClick(seat.position)} // Always call handleSeatClick on click
+                >
+                    <div style={{ color: seat.is_occupied ? '#f57c00' : (isSeatSelected ? '#0288d1' : '#388e3c'), fontWeight: isSeatSelected ? 'bold' : 'normal' }}>
+                        <EventSeatIcon style={{ fontSize: '40px', marginBottom: '-20px' }} />
+                    </div>
+                    <Typography variant='overline' style={{ color: !seat.is_occupied && isSeatSelected ? '#0288d1' : seat.is_occupied ? '#f57c00' : '#388e3c', fontWeight: isSeatSelected ? 'bold' : 'normal' }}>{seat.position}</Typography>
+                </Box>
             );
-            row = [];
+
+            // Add the row to rows array when 5 seats are added or it's the last seat
+            if ((index + 1) % 5 === 0 || index === movie.m_seat.length - 1) {
+                rows.push(
+                    <div key={index} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        {row}
+                    </div>
+                );
+                row = [];
+            }
+        });
+
+        return rows;
+    };
+    useEffect(() => {
+        console.log(selectedSeats); 
+    }, [selectedSeats]);
+
+    // Function to handle clicking on the "Select All Seats" button
+    const handleSelectAllSeats = () => {
+        if (selectAll) {
+            // If all seats are already selected, unselect all seats
+            setSelectedSeats([]);
+            setSelectAll(false);
+        } else {
+            // If all seats are not selected, select all seats
+            const newSelectedSeats = movie.m_seat
+                .filter(seat => !seat.is_occupied)
+                .map(seat => seat.position);
+
+            setSelectedSeats(newSelectedSeats);
+            setSelectAll(true);
         }
-    });
-
-    return rows;
-};
-useEffect(() => {
-    console.log(selectedSeats); 
-}, [selectedSeats]);
-
-// Function to handle clicking on the "Select All Seats" button
-const handleSelectAllSeats = () => {
-    if (selectAll) {
-        // If all seats are already selected, unselect all seats
-        setSelectedSeats([]);
-        setSelectAll(false);
-    } else {
-        // If all seats are not selected, select all seats
-        const newSelectedSeats = movie.m_seat
-            .filter(seat => !seat.is_occupied)
-            .map(seat => seat.position);
-
-        setSelectedSeats(newSelectedSeats);
-        setSelectAll(true);
-    }
-};
+    };
 
     return (
         <Box>
@@ -151,7 +146,6 @@ const handleSelectAllSeats = () => {
                             <Box className="movie-image" style={{ width: '20%' }}>
                                 <img src='/avatar.jpg' alt="{movie.m_title}" style={{ width: '300px', height: '400px' }} />
                             </Box>
-
                         </MovieImage>
                         <Box className="main-details" style={{ width: '45%' }}>
                             <Typography variant='h5'><b>{movie?.m_title}</b></Typography>
@@ -189,12 +183,10 @@ const handleSelectAllSeats = () => {
                                     <LegendBox style={{background:'#0288d1'}}></LegendBox>
                                     <Typography>Selected Seats </Typography>
                                 </Legend>
-                                
                             </Box>
                         </Box>
                     </Box>
                 </MovieDetail>
-
                 {/* this is the seat */}
                 <Box className="seat-details" style={{ width: '40%', background:'#fff', borderRadius: '10px', textAlign: 'center', padding: '25px' }}>
                     <Typography></Typography>
