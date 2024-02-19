@@ -189,7 +189,7 @@ function Reservation() {
                 </MovieDetail>
                 {/* this is the seat */}
                 <Box className="seat-details" style={{ width: '40%', background:'#fff', borderRadius: '10px', textAlign: 'center', padding: '25px' }}>
-                    <Typography></Typography>
+                    <Typography>Screen</Typography>
                     <Box style={{ width: '400px', margin: '0 auto' }}>
                         {renderSeats()}
                     </Box>
